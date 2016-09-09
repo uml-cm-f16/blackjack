@@ -4,12 +4,14 @@
 
 ## Components
 ### Part 1
-Done 	- card
-Done 	- deck < card
-WIP 	- hand < card
-NS 		- rules
-NS		- player < hand
-NS 		- dealer < [players, rules, deck]
+Status | Item   | Dependencies
+-------|--------|---
+Done   | card   |
+Done   | deck   | card
+WIP    | hand   | card
+NS     | rules  |
+NS     | player | hand
+NS     | dealer | players, rules, deck
 
 ### Part 2
 unit tests
