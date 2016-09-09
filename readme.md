@@ -1,23 +1,30 @@
-card
+# Media Computing Project
 
-deck
-	< card
+## Blackjack Game
 
-hand
-	< card
+## Components
+### Part 1
+Done 	- card
+Done 	- deck < card
+WIP 	- hand < card
+NS 		- rules
+NS		- player < hand
+NS 		- dealer < [players, rules, deck]
 
-rules
+### Part 2
+unit tests
 
+### Part 3
+pygame gui
 
+### Part 4
+debug
 
-player < hand
+## Coding Standards
+http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
 
-dealer < players
-	< hand
-	< rules
-
-
-
+## Contributors
+josefflores
 andrewzlong
 
 
