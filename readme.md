@@ -22,7 +22,7 @@ Download and install pyGame, and study which features are available in pyGame. 	
 Task | Status | Dependencies
 -----|--------|---
 pyGame install | Done | python 
-pyGame research | Done | pyGame
+pyGame research | WIP | pyGame
 project report | NS |  
 
 ### Part 3 - Gui
