@@ -18,6 +18,7 @@ probability  | NS     | NS   | deck, hand
 
 ### Part 2 - pygame Gui 10/5
 Download and install pyGame, and study which features are available in pyGame. 	Submit what the final project will be.
+
 Task | Status | Dependencies
 -----|--------|---
 pyGame install | Done | python 
@@ -31,6 +32,7 @@ TBD
 Submit an interim report on the progress
 
 ### Part 5 - Submision and demo 12/9
+
 Task       | Status
 -----------|---
 Report     | NS
