@@ -27,6 +27,8 @@ class Deck:
 
 		Attributes:
         	_qty	(int): Number of decks to generate.
+			_deck	(int): The deck of cards.
+			_count	(int): The number of cards of the pip value still in the deck.
 
 		Args:
 			qty 	(int) :	The number of decks to include.
@@ -34,7 +36,7 @@ class Deck:
 		'''
 		self._qty = qty
 		self._deck = []
-
+		self._count = []
 		for i in range(0, self._qty) :
 			for suit in Deck._suits :
 				for pip in Deck._pips :
@@ -54,6 +56,7 @@ class Deck:
 			card 	(Card)		: The card to add to the deck.
 
 		'''
+		self._count[card.pip]++
 		self._deck.insert(position, card)
 
 	def _has(self, card) :
@@ -84,6 +87,7 @@ class Deck:
 		count = self._deck.count(card)
 		if count > 0 :
 			self._deck.remove(card)
+			self._count[card.pip]--
 			if count - 1 == self._deck.count(card) :
 				return True
 		return False
@@ -99,6 +103,7 @@ class Deck:
 		'''
 
 		if self._deck :
+			self._count[card.pip]--
 			return self._deck.pop()
 		return False
 
