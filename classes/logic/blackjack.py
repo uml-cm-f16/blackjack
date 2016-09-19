@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from .player import Player
-from
+
 
 class BlackJack(object):
 
@@ -10,5 +10,3 @@ class BlackJack(object):
 	def __init__(numPlayer = 1):
 		self._numPlayer = numPlayer
 		super(Blackjack, self).__init__()
-
-

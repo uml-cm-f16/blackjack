@@ -56,7 +56,7 @@ class Deck(object) :
 			card 	(Card)		: The card to add to the deck.
 
 		"""
-		self._count[card.pip] += 1
+		#self._count[card.pip] += 1
 		self._deck.insert(position, card)
 
 	def _has(self, card) :
@@ -85,7 +85,7 @@ class Deck(object) :
 		count = self._deck.count(card)
 		if count > 0 :
 			self._deck.remove(card)
-			self._count[card.pip] -= 1
+			#self._count[card.pip] -= 1
 			if count - 1 == self._deck.count(card) :
 				return True
 		return False
@@ -100,7 +100,7 @@ class Deck(object) :
 		"""
 
 		if self._deck :
-			self._count[card.pip] -= 1
+			#self._count[card.pip] -= 1
 			return self._deck.pop()
 		return False
 
@@ -172,15 +172,3 @@ class Deck(object) :
 
 		"""
 		return self._marker
-
-
-
-
-
-
-
-
-
-
-
-
