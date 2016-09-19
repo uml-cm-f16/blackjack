@@ -1,26 +1,33 @@
 #!/usr/bin/python3
 
-from classes.deck import Deck
-from classes.hand import Hand
-from classes.card import Card
+from classes.player import Player
+from classes.dealer import Dealer
+
+dealer = Dealer()
+p = [Player()]
+playerCount = len(p)
+
+dealer.shuffle()
+dealer.showDeck()
 
 
-deck = Deck()
-hand = Hand()
+p[0].add(dealer.draw())
+dealer.add(dealer.draw())
 
-deck.shuffle()
+p[0].add(dealer.flip(dealer.draw()))
+dealer.add(dealer.flip(dealer.draw()))
 
-print(deck)
+for i in range(0, playerCount) :
+	print('-', p[i].name, p[i])
 
-for i in range(0, 5) :
-	card = deck.draw()
-	hand.add(card)
+print('-', dealer.name, dealer)
 
-print(deck)
-print(hand)
+for i in range(0, playerCount) :
+	dealer.burn(p[i].fold())
 
-cards = hand.fold()
-deck.burn(cards)
+dealer.burn(dealer.fold())
 
-print(deck)
-print(hand)
+for i in range(0, playerCount) :
+	print('-', p[i].name, p[i])
+
+print('-', dealer.name, dealer)
