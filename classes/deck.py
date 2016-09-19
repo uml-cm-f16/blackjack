@@ -56,7 +56,7 @@ class Deck(object) :
 			card 	(Card)		: The card to add to the deck.
 
 		"""
-		self._count[card.pip]++
+		self._count[card.pip] += 1
 		self._deck.insert(position, card)
 
 	def _has(self, card) :
