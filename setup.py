@@ -1,16 +1,9 @@
 #!/usr/bin/python3
 
-from pip import main as pip
+from classes.installer import Installer
 
-def install(package):
-    print("\n- pip install " + package)
-    pip(['install', package])
+# The package list
+reqs = ["pip", "pygame", "Sphinx"]
 
-reqs = ["pygame", "Sphinx"]
-
-print("--Install Script--")
-
-for req in reqs:
-    install(req)
-
-print("\nDone...")
+# Install packages
+installer = Installer(reqs)

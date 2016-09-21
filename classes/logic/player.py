@@ -15,6 +15,7 @@ class Player(Hand):
     """
     # Private Class Attributes
     _number = 0
+
     # Class methods
     def __init__(self):
         """Initializes a player
