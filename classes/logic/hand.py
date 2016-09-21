@@ -59,6 +59,18 @@ class Hand(object):
             return True
         return False
 
+
+    def total(self, values):
+        sum = 0
+        for card in self._hand:
+            sum += values[card.pip]
+        return sum
+
+    def flip(self, index):
+        """Flip a card by index.
+
+        """
+        self._hand[index].flip()
     def fold(self):
         """Folds a hand of cards.
 
