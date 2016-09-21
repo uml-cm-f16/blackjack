@@ -3,11 +3,14 @@
 from os import system as cmd
 from os import name as name
 
+forms = ["html", "latex"]
+
 # Generate documentation
 cmd("sphinx-apidoc -f -o source/ ../classes/")
-if name == 'nt':
-    print('Windows')
-    cmd(".\make.bat html")
-else:
-    print('Bash')
-    cmd(".\make html")
+for form in forms:
+    if name == 'nt':
+        print('Windows')
+        cmd(".\make.bat " + form)
+    else:
+        print('Bash')
+        cmd("./make " + form)
