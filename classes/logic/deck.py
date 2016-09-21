@@ -4,171 +4,213 @@ from random import shuffle, randint
 
 from .card import Card
 
-class Deck(object) :
-	"""A deck of cards and actions.
+class Deck(object):
+    """A deck of cards and actions.
 
-	A standard deck consists of 52 Cards from 2 - A of K, H, D, and S suits. This
-	class allows for multiple decks to be used alongside a marker card to signify
-	shuffling.
+    A standard deck consists of 52 Cards from 2 - A of K, H, D, and S suits. This
+    class allows for multiple decks to be used alongside a marker card to signify
+    shuffling.
 
-	Attributes:
-        _pips	(List):	The list of pips to use.
-		_suits	(List):	The list of suits to use.
-		_marker (Card):	The marker card used to signify reshuffle point.
+    Attributes:
+        _pips: (List): The list of pips to use.
+        _suits: (List): The list of suits to use.
+        _marker: (Card): The marker card used to signify reshuffle point.
 
-	"""
-	_pips = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-	_suits = ['H', 'S', 'D', 'C']
-	_marker = Card('-', '-')
+    """
+    # Private Class Attributes
+    _pips = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+    _suits = ['H', 'S', 'D', 'C']
+    _marker = Card('-', '-')
+    # Class methods
+    def __init__(self, qty = 1):
+        """ Creates deck.
 
-	def __init__(self, qty = 1) :
-		""" Creates deck.
+        Attributes:
+            _qty: (int): Number of decks to generate.
+            _deck: (int): The deck of cards.
+            _count: (int): The number of cards of the pip value still in the deck.
 
-		Attributes:
-        	_qty	(int): Number of decks to generate.
-			_deck	(int): The deck of cards.
-			_count	(int): The number of cards of the pip value still in the deck.
+        Args:
+            qty: (int): The number of decks to include.
 
-		Args:
-			qty 	(int) :	The number of decks to include.
+        """
+        self._qty = qty
+        self._deck = []
+        self._count = dict()
 
-		"""
-		self._qty = qty
-		self._deck = []
-		self._count = []
-		for i in range(0, self._qty) :
-			for suit in self.__class__._suits :
-				for pip in self.__class__._pips :
-					self._insert(Card(pip, suit))
-		print("Deck Made.")
-		super(Deck, self).__init__()
+        for i in range(0, self._qty):
+            for suit in self.__class__._suits:
+                for pip in self.__class__._pips:
+                    self._insert(Card(pip, suit))
 
-	def __str__(self):
-		"""The str representation of a Deck.
+        # Init to inherit classes
+        super(Deck, self).__init__()
 
-		"""
-		return ', '.join(str(card) for card in self._deck)
+    def __str__(self):
+        """The str representation of a Deck.
 
-	def _insert(self, card, position = 0) :
-		"""Adds a card to the deck.
+        """
+        return ', '.join(str(card) for card in self._deck)
 
-		Args:
-			card 	(Card)		: The card to add to the deck.
+    # Private methods
+    def _insert(self, card, position = 0):
+        """Adds a card to the deck.
 
-		"""
-		#self._count[card.pip] += 1
-		self._deck.insert(position, card)
+        Args:
+            card: (Card): The card to add to the deck.
+            position: (int): 0: The index position of insertion.
 
-	def _has(self, card) :
-		"""Checks to see if card is in the deck.
+        """
+        self._incCount(card.pip)
+        self._deck.insert(position, card)
 
-		Args:
-			card 	(Card)		: The card to look for.
+    def _incCount(self, pip):
+        """Increments the pip count
 
-		Returns:
-					(Boolean)	: If the card was found in the deck.
+        Args:
+            pip: (char): The pip to increment.
 
-		"""
-		return self._deck.count(card) > 0
+        """
+        self._count[pip] = self._count.get(pip, 0) + 1
 
-	def _remove(self, card) :
-		"""Removes a card from the deck.
+    def _decCount(self, pip):
+        """Decrements the pip count
 
-		Args:
-			card 	(Card)		: The card to remove.
+        Args:
+            pip: (char): The pip to decrement.
 
-		Returns:
-			True	(Boolean) 	: Succesful operation status.
-			False	(Boolean) 	: Failed operation status.
+        """
+        self._count[pip] = self._count.get(pip, 0) - 1
 
-		"""
-		count = self._deck.count(card)
-		if count > 0 :
-			self._deck.remove(card)
-			#self._count[card.pip] -= 1
-			if count - 1 == self._deck.count(card) :
-				return True
-		return False
+    def _has(self, card):
+        """Checks to see if card is in the deck.
 
-	def _pop(self) :
-		"""Retrieve a card from the top of the deck.
+        Args:
+            card: (Card): The card to look for.
 
-		Returns:
-			card 	(Card)		: The card that was retrieved.
-			False	(Boolean)	: The deck is empty.
+        Returns:
+            (Boolean): True: The card was found in the deck.
+            (Boolean): False: The card was not found in the deck.
 
-		"""
+        """
+        return self._deck.count(card) > 0
 
-		if self._deck :
-			#self._count[card.pip] -= 1
-			return self._deck.pop()
-		return False
+    def _remove(self, card):
+        """Removes a card from the deck.
 
-	def _mark(self, rFlag = False) :
-		"""Marks a position in the deck to signal reshuffle.
+        Args:
+            card: (Card): The card to remove.
 
-		Args:
-			rFlag	(Boolean) 	: False	: Marker is placed at bottom of deck.
-								  True	: Randomize the location of the marker.
+        Returns:
+            (Boolean): True: Succesful operation status.
+            (Boolean): False: Failed operation status.
 
-		"""
-		# Remove marker if in deck
-		if self._has(self.__class__._marker):
-			self._remove(self.__class__._marker)
+        """
+        count = self._deck.count(card)
+        if count > 0:
+            # Card count in deck is wrong
+            if self._count[card.pip] <= 0:
+                return False
+            # Update card.pip counter
+            self._decCount(card.pip)
+            if count - 1 == self._deck.count(card):
+                self._deck.remove(card)
+                return True
+        return False
 
-		# Add marker to deck
-		if rFlag :
-			position = randint(0, len(self._deck))
-			self._insert(self.__class__._marker, position)
-		else :
-			self._insert(self.__class__._marker)
+    def _pop(self):
+        """Retrieve a card from the top of the deck.
 
-	def shuffle(self, mark = False, rFlag = True) :
-		"""Shuffles a deck of cards.
+        Returns:
+            (Card): The card that was retrieved.
+            (Boolean): False: The deck is empty.
 
-		Has the capability of marking the next shuffle point randomly or once
-		all cards have been used.
+        """
+        if self._deck:
+            card = self._deck.pop()
+            # Update card.pip counter
+            self._decCount(card.pip)
+            return card
+        return False
 
-		Args:
-			mark:	(Boolean)	: True  : Mark a deck.
-								  False : Do not mark a deck.
-			rFlag	(Boolean) 	: True	: Randomly mark deck.
-								  False	: Mark bottom of deck.
+    def _mark(self, rFlag = False):
+        """Marks a position in the deck to signal reshuffle.
 
-		"""
-		shuffle(self._deck)
-		if mark:
-			self._mark(rFlag)
+        Args:
+            rFlag: (Boolean): False: Marker is placed at bottom of deck.
+            rFlag: (Boolean): True: Randomize the location of the marker.
 
-	def show(self) :
-		"""Shows the deck of cards.
+        """
+        # Remove marker if in deck
+        if self._has(self.__class__._marker):
+            self._remove(self.__class__._marker)
 
-		"""
-		print('Deck:', self._deck)
+        # Add marker to deck
+        if rFlag:
+            position = randint(0, len(self._deck))
+            self._insert(self.__class__._marker, position)
+        else:
+            self._insert(self.__class__._marker)
 
-	def draw(self) :
-		"""Retrieves a card from the top of the deck.
+    # Public methods
+    def shuffle(self, mark = False, rFlag = True):
+        """Shuffles a deck of cards.
 
-		Returns:
-			card 	(Card) 		: The card that was retrieved.
-					(Boolean) 	: False	: The deck is empty.
+        Has the capability of marking the next shuffle point randomly or once
+        all cards have been used.
 
-		"""
-		return self._pop()
+        Args:
+            mark: (Boolean): True: Mark a deck.
+                            False: Do not mark a deck.
+            rFlag: (Boolean): True: Randomly mark deck.
+                            False: Mark bottom of deck.
 
-	def burn(self, cards) :
-		"""Return a used card to the deck.
+        """
+        shuffle(self._deck)
+        if mark:
+            self._mark(rFlag)
 
-		Args:
-			card	(Card)		: The card to return.
+    def show(self, force = False):
+        """Shows the deck of cards.
 
-		"""
-		for card in cards :
-			self._insert(card)
+        Args:
+            force: (Boolean): True: Forces visibility of the cards.
+                            False: Shows the cards in their natural state.
 
-	@property
-	def marker(self) :
-		"""Returns a marker for comparison.
+        """
+        if force:
+            print(', '.join(card.peek(force) for card in self._deck))
+        else:
+            print(self._deck)
 
-		"""
-		return self._marker
+
+    def draw(self):
+        """Retrieves a card from the top of the deck.
+
+        Returns:
+            (Card): The card that was retrieved.
+            (Boolean): False: The deck is empty.
+
+        """
+        return self._pop()
+
+    def burn(self, cards):
+        """Return a used card to the deck.
+
+        Args:
+            card: (Card): The card to return.
+
+        """
+        for card in cards:
+            self._insert(card)
+
+    # Properties
+    @property
+    def marker(self):
+        """Returns a marker for comparison.
+
+        Returns:
+            (Card): The marker card
+
+        """
+        return self._marker

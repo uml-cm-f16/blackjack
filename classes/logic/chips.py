@@ -8,8 +8,6 @@ class Chips():
 		tmp = Template("$balance C")
 		return tmp.substitute(balance=self.__balance)
 
-
-
 	def __decrease(self, amount):
 		self.__balance -= amount
 

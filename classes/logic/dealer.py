@@ -4,42 +4,92 @@ from .player import Player
 from .deck import Deck
 
 class Dealer(Player):
-	"""A card dealer.
+    """A card dealer.
 
-	A player that also can deal cards.
-	"""
-	def __init__(self):
-		self._dealer = True
-		self._deck = Deck()
-		super(Dealer, self).__init__()
+    A player that also can deal cards.
 
-	def showDeck(self):
-		print(self._deck)
+    """
+    # Class methods
+    def __init__(self):
+        """Creates a dealer.
 
-	def shuffle(self):
-		return self._deck.shuffle()
+        Attributes:
+            _deck: (Deck): Deck of cards.
 
-	def draw(self):
-		return self._deck.draw()
+        """
+        self._deck = Deck()
 
-	def burn(self, cards):
-		return self._deck.burn(cards)
+        # Init to inherit classes
+        super(Dealer, self).__init__()
 
-	def flip(self, card):
-		card.flip()
-		return card
 
-	@property
-	def name(self):
-		return 'Dealer'
+    # Public methods
+    def showDeck(self):
+        """Shows the deck of cards.
 
-	@property
-	def isDealer(self):
-		"""If the player is a dealer.
+        """
 
-		Returns:
-			(Boolean): False: A player is not a dealer.
-			(Boolean): True: A player is a dealer.
+        self._deck.show(True)
 
-		"""
-		return True
+    def shuffle(self):
+        """Shuffles the deck of cards.
+
+        Returns:
+            (Deck): A shuffled deck.
+        """
+        return self._deck.shuffle()
+
+    def draw(self):
+        """Retrieves a card from the top of the deck.
+
+        Returns:
+            (Card): The top card of the deck.
+        """
+        return self._deck.draw()
+
+    def burn(self, cards):
+        """Returns cards to the bottom of the deck.
+
+        Args:
+            cards: [Card, ...]: The cards to return.
+
+        """
+        self._deck.burn(cards)
+
+    def flip(self, card):
+        """The dealer flips a card.
+
+        Args:
+            card: (Card): The card to flip.
+
+        Returns:
+            (Card): The card that was flipped.
+
+        """
+        return card.flip()
+
+    # Properties
+    @property
+    def name(self):
+        """The name given to a dealer.
+
+        This method overides player.name for the dealer.
+
+        Returns:
+            (str): The name given to a dealer.
+
+        """
+        return 'Dealer'
+
+    @property
+    def isDealer(self):
+        """If the player is a dealer.
+
+        Overides the player.isDealer.
+
+        Returns:
+            (Boolean): False: A player is not a dealer.
+            (Boolean): True: A player is a dealer.
+
+        """
+        return True

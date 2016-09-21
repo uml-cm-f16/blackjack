@@ -1,56 +1,72 @@
 #!/usr/bin/python3
 
 class Hand(object):
-	"""A hand of cards.
+    """A hand of cards.
 
-	"""
+    """
+    # Class methods
+    def __init__(self):
+        """Generates an empty hand of cards.
 
-	def __init__(self):
-		"""Generates an empty hand of cards.
+        """
+        self._hand = []
 
-		"""
-		self._hand = []
-		super(Hand, self).__init__()
+        # Init to inherit classes
+        super(Hand, self).__init__()
 
-	def __str__(self):
-		return ", ".join(str(card) for card in self._hand)
+    def __str__(self):
+        """The string representation of a Hand.
 
-	def _has(self, card) :
-		"""Checks to see if card is in the hand.
+        Returns:
+            (str): A string representation of a hand.
 
-		Args:
-			card 	(Card)		: The card to look for.
+        """
+        return ", ".join(str(card) for card in self._hand)
 
-		Returns:
-					(Boolean)	: If the card was found in the hand.
+    # Private methods
+    def _has(self, card):
+        """Checks to see if card is in the hand.
 
-		"""
-		return self._hand.count(card) > 0
+        Args:
+            card: (Card): The card to look for.
 
-	#	PUBLIC METHODS
+        Returns:
+            (Boolean): True: The card was found in the hand.
+            (Boolean): False: The card was not found in the hand.
 
-	def add(self, card) :
-		self._hand.append(card)
+        """
+        return self._hand.count(card) > 0
 
-	def remove(self, card):
-		if self._has(card):
-			self._hand.remove(card)
-			return True
-		return False
+    # Public methods
+    def add(self, card):
+        """Add a card to the hand.
 
-	def fold(self):
-		"""Folds a hand of cards.
+        Args:
+            card: (card): The card to add tp the hand.
+        """
+        self._hand.append(card)
 
-		Returns:
-			cards	(Card)		: The cards in the _hand.
+    def remove(self, card):
+        """Remove a card from the hand.import
 
-		"""
-		cards = self._hand
-		self._hand = []
-		return cards
+        Returns:
+            (Boolean): True: The card was removed.
+            (Boolean): False: The card was not removed.
 
-	def show(self) :
-		"""Shows the _hand of cards.
+        """
+        if self._has(card):
+            self._hand.remove(card)
+            return True
+        return False
 
-		"""
-		print('Hand', self._hand)
+    def fold(self):
+        """Folds a hand of cards.
+
+        Returns:
+            (Card ...): The cards in the hand.
+
+        """
+        cards = self._hand
+        self._hand = []
+        return cards
+

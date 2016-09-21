@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from classes.player import Player
-from classes.dealer import Dealer
+from classes.logic.player import Player
+from classes.logic.dealer import Dealer
 
 dealer = Dealer()
 p = [Player()]
