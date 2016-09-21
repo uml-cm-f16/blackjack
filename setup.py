@@ -6,7 +6,7 @@ def install(package):
     print("\n- pip install " + package)
     pip(['install', package])
 
-reqs = ["pygame", "pydoc-markdown"]
+reqs = ["pygame", "Sphinx"]
 
 print("--Install Script--")
 
