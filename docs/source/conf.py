@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # BlackJack documentation build configuration file, created by
-# sphinx-quickstart on Wed Sep 21 00:58:07 2016.
+# sphinx-quickstart on Wed Sep 21 12:59:31 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -84,7 +84,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['.build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
