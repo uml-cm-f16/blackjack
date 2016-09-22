@@ -20,6 +20,14 @@ classes.installer module
     :undoc-members:
     :show-inheritance:
 
+classes.updater module
+----------------------
+
+.. automodule:: classes.updater
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
