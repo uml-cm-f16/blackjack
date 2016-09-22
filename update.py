@@ -12,8 +12,8 @@ if len(sys.argv) <= 1:
 updater = Updater()
 
 updater.generate()
-#updater.ghpages()
-#updater.master(sys.argv[2])
+updater.master(sys.argv[1])
+updater.ghpages()
 
 print("Done...")
 sys.exit()
