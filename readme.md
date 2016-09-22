@@ -10,7 +10,7 @@ Jose Flores | josefflores
 Andrew Long | andrewzlong
 
 ### Documentation
-Our documentation can be found in [http://uml-cm-f16.github.io/blackjack](uml-cm-f16.github.io/blackjack).
+Our documentation can be found in [https://uml-cm-f16.github.io/blackjack/](uml-cm-f16.github.io/blackjack).
 
 ### Run commands
 
