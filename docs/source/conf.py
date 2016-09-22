@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # BlackJack documentation build configuration file, created by
-# sphinx-quickstart on Wed Sep 21 12:59:31 2016.
+# sphinx-quickstart on Wed Sep 21 17:24:30 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,8 +19,7 @@
 #
 import os
 import sys
-relPath = "../../classes"
-sys.path.insert(0, os.path.abspath(relPath))
+sys.path.insert(0, os.path.abspath('../../'))
 
 # -- General configuration ------------------------------------------------
 
@@ -94,7 +93,7 @@ exclude_patterns = []
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 #
-# add_function_parentheses = True
+add_function_parentheses = True
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).

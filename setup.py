@@ -2,7 +2,7 @@
 
 from classes.installer import Installer
 
-# The package list
+# The package install/ upgrade list
 reqs = ["pip", "pygame", "Sphinx"]
 
 # Install packages
