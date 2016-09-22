@@ -47,26 +47,321 @@
 <div class="section" id="classes-logic-blackjack-module">
 <h2>classes.logic.blackjack module<a class="headerlink" href="#classes-logic-blackjack-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="classes-logic-card-module">
-<h2>classes.logic.card module<a class="headerlink" href="#classes-logic-card-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic.card">
+<span id="classes-logic-card-module"></span><h2>classes.logic.card module<a class="headerlink" href="#module-classes.logic.card" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.logic.card.Card">
+<em class="property">class </em><code class="descclassname">classes.logic.card.</code><code class="descname">Card</code><span class="sig-paren">(</span><em>pip</em>, <em>suit</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.card.Card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Generates a card and its property accesors.</p>
+<p>Cards have a pip and a suit, it is the responsibility of the logic
+interpreter to determine the value of a Card.</p>
+<dl class="method">
+<dt id="classes.logic.card.Card.flip">
+<code class="descname">flip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.card.Card.flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flips a view state of a card.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Card): The card that was manipulated.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.card.Card.peek">
+<code class="descname">peek</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.card.Card.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the visible string value of a card, when flipped the value
+must be forced.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>force: (Boolean): True: Force the visibility of a hidden card.
+force: (Boolean): False: Do not force the visibility of a card.</dd>
+<dt>Returns:</dt>
+<dd>(str): The string representation of a card</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.card.Card.pip">
+<code class="descname">pip</code><a class="headerlink" href="#classes.logic.card.Card.pip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for card pip value.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(char): The pip value.
+(boolean): False: The pip value is hidden.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.card.Card.suit">
+<code class="descname">suit</code><a class="headerlink" href="#classes.logic.card.Card.suit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for card suit value.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(char): The suit value.
+(boolean):  The suit value is hidden.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="classes-logic-chips-module">
 <h2>classes.logic.chips module<a class="headerlink" href="#classes-logic-chips-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="classes-logic-dealer-module">
-<h2>classes.logic.dealer module<a class="headerlink" href="#classes-logic-dealer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic.dealer">
+<span id="classes-logic-dealer-module"></span><h2>classes.logic.dealer module<a class="headerlink" href="#module-classes.logic.dealer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.logic.dealer.Dealer">
+<em class="property">class </em><code class="descclassname">classes.logic.dealer.</code><code class="descname">Dealer</code><a class="headerlink" href="#classes.logic.dealer.Dealer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.logic.player.Player" title="classes.logic.player.Player"><code class="xref py py-class docutils literal"><span class="pre">classes.logic.player.Player</span></code></a></p>
+<p>A card dealer.</p>
+<p>A player that also can deal cards.</p>
+<dl class="method">
+<dt id="classes.logic.dealer.Dealer.burn">
+<code class="descname">burn</code><span class="sig-paren">(</span><em>cards</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.dealer.Dealer.burn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns cards to the bottom of the deck.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>cards: [Card, ...]: The cards to return.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.dealer.Dealer.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.dealer.Dealer.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a card from the top of the deck.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Card): The top card of the deck.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.dealer.Dealer.flip">
+<code class="descname">flip</code><span class="sig-paren">(</span><em>card</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.dealer.Dealer.flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dealer flips a card.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>card: (Card): The card to flip.</dd>
+<dt>Returns:</dt>
+<dd>(Card): The card that was flipped.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.dealer.Dealer.isDealer">
+<code class="descname">isDealer</code><a class="headerlink" href="#classes.logic.dealer.Dealer.isDealer" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the player is a dealer.</p>
+<p>Overides the player.isDealer.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Boolean): False: A player is not a dealer.
+(Boolean): True: A player is a dealer.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.dealer.Dealer.name">
+<code class="descname">name</code><a class="headerlink" href="#classes.logic.dealer.Dealer.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name given to a dealer.</p>
+<p>This method overides player.name for the dealer.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(str): The name given to a dealer.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.dealer.Dealer.showDeck">
+<code class="descname">showDeck</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.dealer.Dealer.showDeck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the deck of cards.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.dealer.Dealer.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.dealer.Dealer.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuffles the deck of cards.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Deck): A shuffled deck.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="classes-logic-deck-module">
-<h2>classes.logic.deck module<a class="headerlink" href="#classes-logic-deck-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic.deck">
+<span id="classes-logic-deck-module"></span><h2>classes.logic.deck module<a class="headerlink" href="#module-classes.logic.deck" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.logic.deck.Deck">
+<em class="property">class </em><code class="descclassname">classes.logic.deck.</code><code class="descname">Deck</code><span class="sig-paren">(</span><em>qty=1</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.deck.Deck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A deck of cards and actions.</p>
+<p>A standard deck consists of 52 Cards from 2 - A of K, H, D, and S suits. This
+class allows for multiple decks to be used alongside a marker card to signify
+shuffling.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd>_pips: (List): The list of pips to use.
+_suits: (List): The list of suits to use.
+_marker: (Card): The marker card used to signify reshuffle point.</dd>
+</dl>
+<dl class="method">
+<dt id="classes.logic.deck.Deck.burn">
+<code class="descname">burn</code><span class="sig-paren">(</span><em>cards</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.deck.Deck.burn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a used card to the deck.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>card: (Card): The card to return.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.deck.Deck.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.deck.Deck.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a card from the top of the deck.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Card): The card that was retrieved.
+(Boolean): False: The deck is empty.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.deck.Deck.marker">
+<code class="descname">marker</code><a class="headerlink" href="#classes.logic.deck.Deck.marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a marker for comparison.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Card): The marker card</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.deck.Deck.show">
+<code class="descname">show</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.deck.Deck.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the deck of cards.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>force: (Boolean): True: Forces visibility of the cards.</dt>
+<dd>False: Shows the cards in their natural state.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.deck.Deck.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><em>mark=False</em>, <em>rFlag=True</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.deck.Deck.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuffles a deck of cards.</p>
+<p>Has the capability of marking the next shuffle point randomly or once
+all cards have been used.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>mark: (Boolean): True: Mark a deck.</dt>
+<dd>False: Do not mark a deck.</dd>
+<dt>rFlag: (Boolean): True: Randomly mark deck.</dt>
+<dd>False: Mark bottom of deck.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="classes-logic-hand-module">
-<h2>classes.logic.hand module<a class="headerlink" href="#classes-logic-hand-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic.hand">
+<span id="classes-logic-hand-module"></span><h2>classes.logic.hand module<a class="headerlink" href="#module-classes.logic.hand" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.logic.hand.Hand">
+<em class="property">class </em><code class="descclassname">classes.logic.hand.</code><code class="descname">Hand</code><a class="headerlink" href="#classes.logic.hand.Hand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A hand of cards.</p>
+<dl class="method">
+<dt id="classes.logic.hand.Hand.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>card</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.hand.Hand.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a card to the hand.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>card: (card): The card to add tp the hand.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.hand.Hand.flip">
+<code class="descname">flip</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.hand.Hand.flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flip a card by index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.hand.Hand.fold">
+<code class="descname">fold</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.hand.Hand.fold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Folds a hand of cards.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Card ...): The cards in the hand.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.hand.Hand.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>card</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.hand.Hand.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a card from the hand.import</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Boolean): True: The card was removed.
+(Boolean): False: The card was not removed.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.logic.hand.Hand.total">
+<code class="descname">total</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.logic.hand.Hand.total" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="classes-logic-player-module">
-<h2>classes.logic.player module<a class="headerlink" href="#classes-logic-player-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic.player">
+<span id="classes-logic-player-module"></span><h2>classes.logic.player module<a class="headerlink" href="#module-classes.logic.player" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.logic.player.Player">
+<em class="property">class </em><code class="descclassname">classes.logic.player.</code><code class="descname">Player</code><a class="headerlink" href="#classes.logic.player.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#classes.logic.hand.Hand" title="classes.logic.hand.Hand"><code class="xref py py-class docutils literal"><span class="pre">classes.logic.hand.Hand</span></code></a></p>
+<p>An individual player in the game.</p>
+<p>A player is identifiable and holds a hand of cards.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd>_number: (int): The number of players.</dd>
+</dl>
+<dl class="attribute">
+<dt id="classes.logic.player.Player.isDealer">
+<code class="descname">isDealer</code><a class="headerlink" href="#classes.logic.player.Player.isDealer" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the player is a dealer.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(Boolean): False: A player is not a dealer.
+(Boolean): True: A player is a dealer.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="classes.logic.player.Player.name">
+<code class="descname">name</code><a class="headerlink" href="#classes.logic.player.Player.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The identifying name of the player.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(str): The player identifier.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-classes.logic">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-classes.logic" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -81,13 +376,13 @@
 <li><a class="reference internal" href="#">classes.logic package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#classes-logic-blackjack-module">classes.logic.blackjack module</a></li>
-<li><a class="reference internal" href="#classes-logic-card-module">classes.logic.card module</a></li>
+<li><a class="reference internal" href="#module-classes.logic.card">classes.logic.card module</a></li>
 <li><a class="reference internal" href="#classes-logic-chips-module">classes.logic.chips module</a></li>
-<li><a class="reference internal" href="#classes-logic-dealer-module">classes.logic.dealer module</a></li>
-<li><a class="reference internal" href="#classes-logic-deck-module">classes.logic.deck module</a></li>
-<li><a class="reference internal" href="#classes-logic-hand-module">classes.logic.hand module</a></li>
-<li><a class="reference internal" href="#classes-logic-player-module">classes.logic.player module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-classes.logic.dealer">classes.logic.dealer module</a></li>
+<li><a class="reference internal" href="#module-classes.logic.deck">classes.logic.deck module</a></li>
+<li><a class="reference internal" href="#module-classes.logic.hand">classes.logic.hand module</a></li>
+<li><a class="reference internal" href="#module-classes.logic.player">classes.logic.player module</a></li>
+<li><a class="reference internal" href="#module-classes.logic">Module contents</a></li>
 </ul>
 </li>
 </ul>
