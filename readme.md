@@ -3,17 +3,34 @@
 ## Blackjack Game
 
 ### Contributors
-josefflores
-andrewzlong
+
+Contributor | Username
+------------|------------
+Jose Flores | josefflores
+Andrew Long | andrewzlong
 
 ### Documentation
-uml-cm-f16.github.io/blackjack
+Our documentation can be found in [uml-cm-f16.github.io/blackjack](uml-cm-f16.github.io/blackjack).
+
+### Run commands
+
++ Install Dependencies
+
+  `python ./setup.py`
+
++ Run application
+
+  `python ./main.py`
+
++ Update application: `$message` is the git commit message to use.
+
+  `python update.py "$message"`
 
 ### Tasks
 
 Task            | Status | Test | Dependencies      | Note
 ----------------|--------|------|-------------------|-----
-python 3        | Done   | -    | python            | Dependency
+python 3        | Done   | -    | -                 | Dependency
 pyGame          | Done   | -    | python 3          | Dependency
 pyGame research | WIP    | -    | pyGame            |
 sphinx          | Done   | -    | python 3          | Dependency
@@ -33,21 +50,13 @@ Submission      | NS     | All  |                   |
 Demo            | NS     | All  |                   |
 
 ### Milestones
-
-#### Part 1 - Simulator 9/21
-Write a blackjack simulator. The simulator views the game from a player’s perspective and tries to provide insights to whether to get another card or stop in various scenarios. Assuming that you are the only player, write a blackjack simulator which lists the sum of hands of the player and that of the dealer, whether to get another card, and what the probability of winning when the decision (of getting another card or of declining) is applied.
-
-#### Part 2 - pygame Gui 10/5
-Download and install pyGame, and study which features are available in pyGame. 	Submit what the final project will be.
-
-#### Part 3 - Gui
-TBD
-
-#### Part 4 - Alpha report 11/2
-Submit an interim report on the progress
-
-#### Part 5 - Submision and demo 12/9
-TBD
+Date  | Item | Description
+------|------|------------
+09/23 | Simulator | Write a blackjack simulator. The simulator views the game from a player’s perspective and tries to provide insights to whether to get another card or stop in various scenarios. Assuming that you are the only player, write a blackjack simulator which lists the sum of hands of the player and that of the dealer, whether to get another card, and what the probability of winning when the decision (of getting another card or of declining) is applied.
+10/05 | pyGame Gui | Download and install pyGame, and study which features are available in pyGame. Submit what the final project will be.
+10/20 | Gui-Sim integration | TBD
+11/02 | Alpha report | Submit an interim report on the progress
+12/09 | Submission | Final submission and demo.
 
 ## Coding Standards
 http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
