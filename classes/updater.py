@@ -45,6 +45,6 @@ class Updater(object):
     def master(self, msg):
         print("\n - Uploading to git master branch: " + sys.argv[1])
         cmd("git add -A")
-        cmd("git commit -m " + msg)
+        cmd('git commit -m "' + msg +'"')
         cmd("git pull origin master")
         cmd("git push origin master")
