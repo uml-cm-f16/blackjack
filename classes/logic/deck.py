@@ -42,7 +42,6 @@ class Deck(object):
             for suit in self.__class__._suits:
                 for pip in self.__class__._pips:
                     self._insert(Card(pip, suit))
-
         # Init to inherit classes
         super(Deck, self).__init__()
 
@@ -61,27 +60,39 @@ class Deck(object):
             position: (int): 0: The index position of insertion.
 
         """
-        self._incCount(card.pip)
+        self._incCount(card)
+        card.flip()
         self._deck.insert(position, card)
 
-    def _incCount(self, pip):
+    def _incCount(self, card):
         """Increments the pip count
 
         Args:
-            pip: (char): The pip to increment.
+            card: (Card): The card pip to increment.
 
         """
-        self._count[pip] = self._count.get(pip, 0) + 1
+        flag = False
+        if card.pip == False:
+            flag = True
+            card.flip()
+        self._count[card.pip] = self._count.get(card.pip, 0) + 1
+        if flag:
+            card.flip()
 
-    def _decCount(self, pip):
+    def _decCount(self, card):
         """Decrements the pip count
 
         Args:
-            pip: (char): The pip to decrement.
+            card: (Card): The card pip to decrement.
 
         """
-        self._count[pip] = self._count.get(pip, 0) - 1
-
+        flag = False
+        if card.pip == False:
+            flag = True
+            card.flip()
+        self._count[card.pip] = self._count.get(card.pip, 0) - 1
+        if flag:
+            card.flip()
     def _has(self, card):
         """Checks to see if card is in the deck.
 
@@ -112,7 +123,7 @@ class Deck(object):
             if self._count[card.pip] <= 0:
                 return False
             # Update card.pip counter
-            self._decCount(card.pip)
+            self._decCount(card)
             if count - 1 == self._deck.count(card):
                 self._deck.remove(card)
                 return True
@@ -129,7 +140,7 @@ class Deck(object):
         if self._deck:
             card = self._deck.pop()
             # Update card.pip counter
-            self._decCount(card.pip)
+            self._decCount(card)
             return card
         return False
 
@@ -214,3 +225,19 @@ class Deck(object):
 
         """
         return self._marker
+
+    def percent(self, lst, values):
+        """Percentage chance to win from next card.
+
+        Args:
+            lst: (list): A list of cards that will win the hand.
+
+        Returns:
+            (float): The percentage to win off next card.
+
+        """
+        d = list(k for k, v in values.items() if v <= lst and v > 0)
+        tmp1 = sum(map(lambda x: self._count[x], d))
+        tmp2 = sum(self._count.values())
+        # print(d, tmp1, tmp2)
+        return tmp1/tmp2

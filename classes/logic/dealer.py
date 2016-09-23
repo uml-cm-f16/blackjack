@@ -56,7 +56,7 @@ class Dealer(Player):
         """
         self._deck.burn(cards)
 
-    def flip(self, card):
+    def flipDeal(self, card):
         """The dealer flips a card.
 
         Args:
@@ -93,3 +93,6 @@ class Dealer(Player):
 
         """
         return True
+
+    def percent(self, lst, values):
+        return self._deck.percent(lst, values)

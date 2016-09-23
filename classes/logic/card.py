@@ -20,7 +20,7 @@ class Card(object):
         """
         self._pip = pip
         self._suit = suit
-        self._hidden = True
+        self._hidden = False
 
         # Init to inherit classes
         super(Card, self).__init__()

@@ -40,11 +40,11 @@ update.py       | Done   | -    | -                 | Documents and updates repo
 card class      | Done   | NS   | -                 | A playing card.
 deck class      | Done   | NS   | card              | A deck of Playing cards.
 hand class      | Done   | NS   | card              | A hand of cards.
-player class    | WIP    | NS   | hand              | Extends a hand of cards, to make a player.
+player class    | Done   | NS   | hand              | Extends a hand of cards, to make a player.
 chips class     | -      | -    | player            | Extends a player by giving them chip handling methods.
-dealer class    | WIP    | NS   | player, deck      | Extends a player by giving them deck access methods.
+dealer class    | Done   | NS   | player, deck      | Extends a player by giving them deck access methods.
 blackjack class | WIP    | NS   | dealer            | The blackjack game rules applied to a dealer.
-probability     | NS     | NS   | blackjack         | Extends the game by maintaining statistics.
+probability     | WIP    | NS   | blackjack         | Extends the game by maintaining statistics.
 Report          | NS     | All  | -                 | -
 Submission      | NS     | All  | -                 | -
 Demo            | NS     | All  | -                 | -
