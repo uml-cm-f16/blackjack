@@ -16,7 +16,7 @@ Our documentation can be found in [uml-cm-f16.github.io/blackjack/](https://uml-
 
 + Install Dependencies.
 
-  `python ./setup.py`
+  `python ./setup.py install`
 
 + Run application.
 
@@ -24,7 +24,7 @@ Our documentation can be found in [uml-cm-f16.github.io/blackjack/](https://uml-
 
 + Update application: `$message` is the git commit message to use.
 
-  `python update.py "$message"`
+  `python ./setup.py save "$message"`
 
 ### Tasks
 

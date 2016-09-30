@@ -6,3 +6,4 @@ classes
 
    app
    logic
+   pygame
