@@ -4,10 +4,18 @@ pygame package
 Submodules
 ----------
 
-pygame.pygame_client module
----------------------------
+pygame.display_engine module
+----------------------------
 
-.. automodule:: pygame.pygame_client
+.. automodule:: pygame.display_engine
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pygame.main module
+------------------
+
+.. automodule:: pygame.main
     :members:
     :undoc-members:
     :show-inheritance:
