@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from classes.logic.player import Player
-from classes.logic.dealer import Dealer
+from src.logic.player import Player
+from src.logic.dealer import Dealer
 
 def label(txt):
     print("\n---" + txt)

@@ -2,11 +2,11 @@
 
 import sys
 
-from classes.app.installer import Installer
-from classes.app.updater import Updater
+from src.app.installer import Installer
+from src.app.updater import Updater
 
 # The package install/ upgrade list
-reqs = ["pip", "pygame", "Sphinx"]
+reqs = ["pip", "pygame", "pytest", "Sphinx"]
 
 if len(sys.argv) <= 1:
     print("\nError: No Action given.")
