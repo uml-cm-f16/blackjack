@@ -49,6 +49,9 @@ class Hand(object):
     def remove(self, card):
         """Remove a card from the hand.import
 
+        Args:
+            card: (card): The card to add tp the hand.
+
         Returns:
             (Boolean): True: The card was removed.
             (Boolean): False: The card was not removed.
@@ -60,17 +63,31 @@ class Hand(object):
         return False
 
 
-    def total(self, values):
+    def total(self, dictOfValues):
+        """Caclulates the numeric total of a hand of cards
+
+        Args:
+            dictOfValues: (Dictionary): Dictionary of card values.
+
+        Returns:
+            (Integer): The dum of the hand.
+        """
         sum = 0
+
         for card in self._hand:
-            sum += values[card.pip]
+            sum += dictOfValues[card.pip]
+
         return sum
 
     def flip(self, index):
         """Flip a card by index.
 
+        Args:
+            index: (Integer): The index of the the card to flip.
+
         """
         self._hand[index].flip()
+
     def fold(self):
         """Folds a hand of cards.
 

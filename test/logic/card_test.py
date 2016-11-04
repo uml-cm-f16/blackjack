@@ -1,40 +1,85 @@
+#!/usr/bin/python3
+
 import unittest
-import logging
 
-from src.logic.card import Card
+# Importing class to test
+from ...src.logic.card import Card
 
-class TestCard(unittest.TestCase):
+class Test_Card(unittest.TestCase):
+    """Tests the card class methods.
 
-    def test_getterPip(self):
-        pip = '1'
+    """
+    def test_Card_getterPip(self):
+        """Pip aka Value retrieval.
+
+        """
+        pip = 'A'
         card = Card(pip, 'C')
 
+        # Pip is retrievable
         self.assertEqual(card.pip, pip)
 
-    def test_getterSuit(self):
-        suit = 'C'
-        card = Card('1', suit)
+    def test_Card_getterSuit(self):
+        """Suit retrieval.
 
+        """
+        suit = 'C'
+        card = Card('A', suit)
+
+        # Suit is retrievable
         self.assertEqual(card.suit, suit)
 
-    def test_strRepresentation(self):
-        card = Card('1', 'C')
+    def test_Card_strRepresentation(self):
+        """String representation of a card.
 
-        out = "[1C]"
-        self.assertEqual(str(card), out)
+        """
+        self.assertEqual(str(Card('A', 'C')), "[AC]")
+        self.assertEqual(str(Card('2', 'C')), "[2C]")
+        self.assertEqual(str(Card('A', 'S')), "[AS]")
+        self.assertEqual(str(Card('2', 'S')), "[2S]")
 
-    def test_flip(self):
-        out1 = "[1C]"
+    def test_Card_flip(self):
+        """Card flipping.
+
+        """
+
+        card = Card('A', 'C')
+        self.assertEqual(str(card), "[AC]")
+
+        card.flip()
+        self.assertEqual(str(card), "[<>]")
+
+        card.flip()
+        self.assertEqual(str(card), "[AC]")
+
+    def test_Card_peek(self):
+        """Card peeking test.
+
+        Checks to see if cards can be seen when in a visible state.
+        Checks to see if cards can be forced to a temporary visible state.
+        Checks that peek is temoporary and does not modify the card.
+
+        """
+        out1 = "[AC]"
         out2 = "[<>]"
-        card = Card('1', 'C')
+        card = Card('A', 'C')
 
+        # Visible state
         self.assertEqual(str(card), out1)
+        self.assertEqual(str(card.peek()), out1)
+        self.assertEqual(str(card.peek(True)), out1)
 
         card.flip()
+
+        # Hidden State
         self.assertEqual(str(card), out2)
+        self.assertEqual(str(card.peek()), out2)
+        self.assertEqual(str(card.peek(True)), out1)
+        self.assertEqual(str(card), out2) # not persisted
 
         card.flip()
-        self.assertEqual(str(card), out1)
 
-if __name__ == '__main__':
-    unittest.main()
+        # Visible state return
+        self.assertEqual(str(card), out1)
+        self.assertEqual(str(card.peek()), out1)
+        self.assertEqual(str(card.peek(True)), out1)
