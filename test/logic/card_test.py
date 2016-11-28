@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This module tests the Card class."""
 
 import unittest
 
@@ -9,7 +10,7 @@ class Test_Card(unittest.TestCase):
     """Tests the card class methods.
 
     """
-    def test_Card_getterPip(self):
+    def test_getter_pip(self):
         """Pip aka Value retrieval.
 
         """
@@ -19,7 +20,7 @@ class Test_Card(unittest.TestCase):
         # Pip is retrievable
         self.assertEqual(card.pip, pip)
 
-    def test_Card_getterSuit(self):
+    def test_getter_suit(self):
         """Suit retrieval.
 
         """
@@ -29,7 +30,7 @@ class Test_Card(unittest.TestCase):
         # Suit is retrievable
         self.assertEqual(card.suit, suit)
 
-    def test_Card_strRepresentation(self):
+    def test_str_representation(self):
         """String representation of a card.
 
         """
@@ -38,7 +39,7 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(str(Card('A', 'S')), "[AS]")
         self.assertEqual(str(Card('2', 'S')), "[2S]")
 
-    def test_Card_flip(self):
+    def test_flip(self):
         """Card flipping.
 
         """
@@ -52,7 +53,7 @@ class Test_Card(unittest.TestCase):
         card.flip()
         self.assertEqual(str(card), "[AC]")
 
-    def test_Card_peek(self):
+    def test_peek(self):
         """Card peeking test.
 
         Checks to see if cards can be seen when in a visible state.

@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+"""A deck of cards."""
 
 from random import shuffle, randint
-
+from decimal import Decimal, ROUND_HALF_UP
 from .card import Card
 
 class Deck(object):
@@ -21,8 +22,9 @@ class Deck(object):
     _pips = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
     _suits = ['H', 'S', 'D', 'C']
     _marker = Card('-', '-')
+
     # Class methods
-    def __init__(self, qty = 1):
+    def __init__(self, qty=1):
         """ Creates deck.
 
         Attributes:
@@ -38,7 +40,7 @@ class Deck(object):
         self._deck = []
         self._count = dict()
 
-        for i in range(0, self._qty):
+        for _ in range(0, self._qty):
             for suit in self.__class__._suits:
                 for pip in self.__class__._pips:
                     self._insert(Card(pip, suit))
@@ -52,7 +54,7 @@ class Deck(object):
         return ', '.join(str(card) for card in self._deck)
 
     # Private methods
-    def _insert(self, card, position = 0):
+    def _insert(self, card, position=0):
         """Adds a card to the deck.
 
         Args:
@@ -87,7 +89,7 @@ class Deck(object):
 
         """
         flag = False
-        if card.pip == False:
+        if card.pip is False:
             flag = True
             card.flip()
         self._count[card.pip] = self._count.get(card.pip, 0) - 1
@@ -144,12 +146,12 @@ class Deck(object):
             return card
         return False
 
-    def _mark(self, rFlag = False):
+    def _mark(self, r_flag=False):
         """Marks a position in the deck to signal reshuffle.
 
         Args:
-            rFlag: (Boolean): False: Marker is placed at bottom of deck.
-            rFlag: (Boolean): True: Randomize the location of the marker.
+            r_flag: (Boolean): False: Marker is placed at bottom of deck.
+            r_flag: (Boolean): True: Randomize the location of the marker.
 
         """
         # Remove marker if in deck
@@ -157,14 +159,14 @@ class Deck(object):
             self._remove(self.__class__._marker)
 
         # Add marker to deck
-        if rFlag:
+        if r_flag:
             position = randint(0, len(self._deck))
             self._insert(self.__class__._marker, position)
         else:
             self._insert(self.__class__._marker)
 
     # Public methods
-    def shuffle(self, mark = False, rFlag = True):
+    def shuffle(self, mark=False, r_flag=True):
         """Shuffles a deck of cards.
 
         Has the capability of marking the next shuffle point randomly or once
@@ -173,15 +175,15 @@ class Deck(object):
         Args:
             mark: (Boolean): True: Mark a deck.
                             False: Do not mark a deck.
-            rFlag: (Boolean): True: Randomly mark deck.
+            r_flag: (Boolean): True: Randomly mark deck.
                             False: Mark bottom of deck.
 
         """
         shuffle(self._deck)
         if mark:
-            self._mark(rFlag)
+            self._mark(r_flag)
 
-    def show(self, force = False):
+    def show(self, force=False):
         """Shows the deck of cards.
 
         Args:
@@ -190,9 +192,9 @@ class Deck(object):
 
         """
         if force:
-            print(', '.join(card.peek(force) for card in self._deck))
+            return ', '.join(card.peek(force) for card in self._deck)
         else:
-            print(self._deck)
+            return self._deck
 
 
     def draw(self):
@@ -212,8 +214,12 @@ class Deck(object):
             card: (Card): The card to return.
 
         """
-        for card in cards:
-            self._insert(card)
+        if isinstance(cards, Card):
+             self._insert(cards)
+        if isinstance(cards, list):
+            for card in cards:
+                self._insert(card)
+
 
     # Properties
     @property
@@ -236,8 +242,63 @@ class Deck(object):
             (float): The percentage to win off next card.
 
         """
-        d = list(k for k, v in values.items() if v <= lst and v > 0)
-        tmp1 = sum(map(lambda x: self._count[x], d))
-        tmp2 = sum(self._count.values())
-        # print(d, tmp1, tmp2)
-        return tmp1/tmp2
+        def winnable_cards(key, score):
+            if key is False:
+                return 0
+            if self.possible_win(Card(key, '-'), values, 21, score) is True:
+                return self._count[key]
+            return 0
+
+
+        score = 0
+        for card in lst:
+            score = self.total(score, card, values)
+
+        total_winable_cards = 0
+        for k in self._count.keys():
+            total_winable_cards = total_winable_cards + winnable_cards(k, score)
+
+        total_playable_cards = sum(self._count.values())
+
+        tmp = Decimal(100 * total_winable_cards/ total_playable_cards)
+        return float(Decimal(tmp.quantize(Decimal('.001'), rounding=ROUND_HALF_UP)))
+
+    def possible_win(self, card, values, score_max, score):
+        """ checks if the core otutcomes leads to a winabel value.
+        """
+        winnable = False
+        def map_win(s):
+            """
+            checks if any of the leaves are wins
+            """
+            nonlocal winnable
+            if winnable is True:
+                return
+            elif isinstance(s, list):
+                [map_win(i) for i in s]
+            elif s <= score_max:
+                winnable = True
+            else:
+                return
+
+        map_win(self.total(score, card, values))
+
+        return winnable
+
+    def total(self, score, card, values):
+        """ get possible totals.
+        """
+        def get_val(val):
+            if isinstance(values[card.pip], list):
+                return [elem + val for elem in values[card.pip]]
+            return values[card.pip] + val
+
+        if isinstance(score, list):
+            return [self.total(i, card, values) for i in score]
+        return get_val(score)
+
+
+
+
+
+

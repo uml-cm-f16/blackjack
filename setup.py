@@ -6,7 +6,7 @@ from src.app.installer import Installer
 from src.app.updater import Updater
 
 # The package install/ upgrade list
-reqs = ["pip", "pygame", "pytest", "Sphinx"]
+reqs = ["pip", "pygame", "pytest", "pylint", "Sphinx"]
 
 if len(sys.argv) <= 1:
     print("\nError: No Action given.")

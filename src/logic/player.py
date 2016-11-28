@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""A player."""
 
 from string import Template
 

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""A players hand of cards."""
 
 class Hand(object):
     """A hand of cards.
@@ -63,21 +64,21 @@ class Hand(object):
         return False
 
 
-    def total(self, dictOfValues):
+    def total(self, dict_of_values):
         """Caclulates the numeric total of a hand of cards
 
         Args:
-            dictOfValues: (Dictionary): Dictionary of card values.
+            dict_of_values: (Dictionary): Dictionary of card values.
 
         Returns:
             (Integer): The dum of the hand.
         """
-        sum = 0
+        total = 0
 
         for card in self._hand:
-            sum += dictOfValues[card.pip]
+            total += dict_of_values[card.pip]
 
-        return sum
+        return total
 
     def flip(self, index):
         """Flip a card by index.

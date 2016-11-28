@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Playing card."""
 
 from string import Template
 
@@ -46,7 +47,7 @@ class Card(object):
         self._hidden = not self._hidden
         return self
 
-    def peek(self, force = False):
+    def peek(self, force=False):
         """ Return the visible string value of a card, when flipped the value
         must be forced.
 
@@ -63,12 +64,12 @@ class Card(object):
             flag = True
             self._hidden = False
 
-        strSelf = str(self)
+        str_self = str(self)
 
         if flag:
             self._hidden = True
 
-        return strSelf
+        return str_self
 
     # Properties
     @property
