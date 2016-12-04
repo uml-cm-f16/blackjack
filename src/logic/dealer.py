@@ -1,8 +1,17 @@
 #!/usr/bin/python3
+""" Defines a card dealer.
 
+    A Card dealer is a player that manages the deck.
+
+"""
+
+# Import the player base class of the dealer
 from .player import Player
+
+# Importing the deck class
 from .deck import Deck
 
+# Defining the dealer
 class Dealer(Player):
     """A card dealer.
 
@@ -17,14 +26,18 @@ class Dealer(Player):
             _deck: (Deck): Deck of cards.
 
         """
+        self._id = -1
+
+        # Remove dealer from player count
+        Player._player_counter -= 1
+
         self._deck = Deck()
 
         # Init to inherit classes
         super(Dealer, self).__init__()
 
-
     # Public methods
-    def showDeck(self):
+    def show_deck(self):
         """Shows the deck of cards.
 
         """
@@ -56,7 +69,7 @@ class Dealer(Player):
         """
         self._deck.burn(cards)
 
-    def flipDeal(self, card):
+    def flip_deal(self, card):
         """The dealer flips a card.
 
         Args:
@@ -68,31 +81,11 @@ class Dealer(Player):
         """
         return card.flip()
 
-    # Properties
     @property
-    def name(self):
-        """The name given to a dealer.
-
-        This method overides player.name for the dealer.
+    def deck_stats(self):
+        """ Returns a decks stats dictionary
 
         Returns:
-            (str): The name given to a dealer.
-
+            (Dictionary)    The amount of cards left in the deck of each suit.
         """
-        return 'Dealer'
-
-    @property
-    def isDealer(self):
-        """If the player is a dealer.
-
-        Overides the player.isDealer.
-
-        Returns:
-            (Boolean): False: A player is not a dealer.
-            (Boolean): True: A player is a dealer.
-
-        """
-        return True
-
-    def percent(self, lst, values):
-        return self._deck.percent(lst, values)
+        return self._deck.deck_stats

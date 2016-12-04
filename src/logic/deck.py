@@ -232,70 +232,11 @@ class Deck(object):
         """
         return self._marker
 
-    def percent(self, lst, values):
-        """Percentage chance to win from next card.
-
-        Args:
-            lst: (list): A list of cards that will win the hand.
-
-        Returns:
-            (float): The percentage to win off next card.
-
-        """
-        def winnable_cards(key, score):
-            if key is False:
-                return 0
-            if self.possible_win(Card(key, '-'), values, 21, score) is True:
-                return self._count[key]
-            return 0
 
 
-        score = 0
-        for card in lst:
-            score = self.total(score, card, values)
-
-        total_winable_cards = 0
-        for k in self._count.keys():
-            total_winable_cards = total_winable_cards + winnable_cards(k, score)
-
-        total_playable_cards = sum(self._count.values())
-
-        tmp = Decimal(100 * total_winable_cards/ total_playable_cards)
-        return float(Decimal(tmp.quantize(Decimal('.001'), rounding=ROUND_HALF_UP)))
-
-    def possible_win(self, card, values, score_max, score):
-        """ checks if the core otutcomes leads to a winabel value.
-        """
-        winnable = False
-        def map_win(s):
-            """
-            checks if any of the leaves are wins
-            """
-            nonlocal winnable
-            if winnable is True:
-                return
-            elif isinstance(s, list):
-                [map_win(i) for i in s]
-            elif s <= score_max:
-                winnable = True
-            else:
-                return
-
-        map_win(self.total(score, card, values))
-
-        return winnable
-
-    def total(self, score, card, values):
-        """ get possible totals.
-        """
-        def get_val(val):
-            if isinstance(values[card.pip], list):
-                return [elem + val for elem in values[card.pip]]
-            return values[card.pip] + val
-
-        if isinstance(score, list):
-            return [self.total(i, card, values) for i in score]
-        return get_val(score)
+    @property
+    def deck_stats(self):
+        return self._count
 
 
 

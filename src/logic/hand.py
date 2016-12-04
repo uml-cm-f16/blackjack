@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """A players hand of cards."""
 
-class Hand(object):
+class Hand(list):
     """A hand of cards.
 
     """
@@ -10,7 +10,6 @@ class Hand(object):
         """Generates an empty hand of cards.
 
         """
-        self._hand = []
 
         # Init to inherit classes
         super(Hand, self).__init__()
@@ -22,64 +21,9 @@ class Hand(object):
             (str): A string representation of a hand.
 
         """
-        return ", ".join(str(card) for card in self._hand)
+        return ", ".join(str(card) for card in self)
 
     # Private methods
-    def _has(self, card):
-        """Checks to see if card is in the hand.
-
-        Args:
-            card: (Card): The card to look for.
-
-        Returns:
-            (Boolean): True: The card was found in the hand.
-            (Boolean): False: The card was not found in the hand.
-
-        """
-        return self._hand.count(card) > 0
-
-    # Public methods
-    def add(self, card):
-        """Add a card to the hand.
-
-        Args:
-            card: (card): The card to add tp the hand.
-        """
-        self._hand.append(card)
-
-    def remove(self, card):
-        """Remove a card from the hand.import
-
-        Args:
-            card: (card): The card to add tp the hand.
-
-        Returns:
-            (Boolean): True: The card was removed.
-            (Boolean): False: The card was not removed.
-
-        """
-        if self._has(card):
-            self._hand.remove(card)
-            return True
-        return False
-
-
-    def total(self, dict_of_values):
-        """Caclulates the numeric total of a hand of cards
-
-        Args:
-            dict_of_values: (Dictionary): Dictionary of card values.
-
-        Returns:
-            (Integer): The dum of the hand.
-        """
-        total = 0
-
-        for card in self._hand:
-            total += dict_of_values[card.pip]
-
-        return total
-
     def flip(self, index):
         """Flip a card by index.
 
@@ -87,7 +31,7 @@ class Hand(object):
             index: (Integer): The index of the the card to flip.
 
         """
-        self._hand[index].flip()
+        self[index].flip()
 
     def fold(self):
         """Folds a hand of cards.
@@ -96,7 +40,64 @@ class Hand(object):
             (Card ...): The cards in the hand.
 
         """
-        cards = self._hand
-        self._hand = []
+        cards = self
+        self.clear()
         return cards
+
+
+    def total(self, values):
+        """ A list of possible scores.
+
+        """
+        def flatten(lst):
+            """ Flattens a multi level lest to one level.
+
+            """
+            return sum(([x] if not isinstance(x, list) else flatten(x) for x in [lst]), [])
+
+        def get_val(key, score):
+            """ Get the card value added to the score.
+
+            """
+            # If an ace
+            if isinstance(values[key], list):
+                return [elem + score for elem in values[key]]
+
+            # Not an ace
+            return values[key] + score
+
+        def branch_scores(key, score):
+            """ dir
+            """
+            # If the total is a list because of multiple valued cards
+            if isinstance(score, list):
+                return [branch_scores(key, i) for i in score]
+
+            # if the score is a single value
+            return get_val(key, score)
+
+        # Get all possible scores
+        score = 0
+        for card in self:
+            score = branch_scores(card.pip, score)
+
+        # Return an non nested list of scores
+        return flatten(score)
+
+    def total_closest(self, values, max_score):
+        """ Get highest score up to max score if possible, otherwise get the
+        lowest score
+
+        """
+        # Get all possible scores
+        score = self.total(values)
+
+        # no score meets criteria
+        minimum = min(score)
+        if minimum > max_score:
+            return minimum
+
+        # get score at or under max score
+        score = filter(lambda x: x <= max_score, score)
+        return max(score)
 
