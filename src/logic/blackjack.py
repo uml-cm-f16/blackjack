@@ -201,20 +201,12 @@ class Blackjack(object):
                       <int>,        The hands score
                       <float>]]     Chance to stay in game with next hit
         """
-        # Move to the current player
+
         for card in self._target_hand:
             if card.pip is False:
                 self._dealer.flip_deal(card)
-
-        # Is now the dealer turn
-        if self._player_current == self._terms['DEALER']:
-            for card in self._target_hand:
-                if card.pip is False:
-                    self._dealer.flip_deal(card)
-            return self._target_hand_stats
-
-        # Is a player
         return self._target_hand_stats
+
 
     def player_hit(self):
         """ Add a card to the target
@@ -240,7 +232,18 @@ class Blackjack(object):
         return self._target_hand_stats
 
     def player_end(self):
+        """ ends a players turn and moves to the next player
+        """
         return self._target_hand_next()
+    def dealer_stats(self):
+        """ Gets the dealers stats
+        """
+        tmp = self._player_current
+        self._player_current = self._terms["DEALER"]
+        stats = self._target_hand_stats
+        self._player_current = tmp
+        return stats
+
     def round_end(self):
         """ Ends a round of blackjack by dealing the dealer, and getting results.
 
@@ -251,6 +254,7 @@ class Blackjack(object):
                           <int>],   -2 | -1 | 0 | 1 <=> LOSS | DRAW | WIN | UNKNOWN
                          ...]
         """
+        self.player_start()
         # get closest possible value to and under self._terms["SCORE_MAX"], if not the lowest value
         dealer_result = self._target_hand.total_closest(self._values, self._terms["SCORE_MAX"])
 
@@ -287,19 +291,22 @@ class Blackjack(object):
                 ret.append([self._player_current, score, state])
             ret.append([self._player_current, dealer_result, house])
 
-            # Fold all hands
-            while self._target_hand_next() != self._terms["DEALER"]:
-                self._target_hand.fold()
-            self._target_hand.fold()
-
-            self._target_hand_next()
-
             # return win loss results
             return ret
 
         else:
             self._deal_card(True)
             return self.round_end()
+
+    def round_reset(self):
+        """ Resets the table
+        """
+        # Fold all hands
+        while self._target_hand_next() != self._terms["DEALER"]:
+            self._target_hand.fold()
+        self._target_hand.fold()
+
+        self._target_hand_next()
 
 
 
