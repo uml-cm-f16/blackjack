@@ -3,10 +3,10 @@
 
 import unittest
 
-from ...src.logic.card import Card
+from ..src.card import Card
 
 # Importing class to test
-from ...src.logic.deck import Deck
+from ..src.deck import Deck
 
 class Test_Deck(unittest.TestCase):
     """Tests the Deck class methods.

@@ -1,10 +1,16 @@
 #!/usr/bin/python3
-"""Playing card."""
+""" A playing card.
+
+"""
+
+# IMPORTS
 
 from string import Template
 
+# CLASS
+
 class Card(object):
-    """Generates a card and its property accesors.
+    """ Generates a playing card that can be flipped over.
 
     Cards have a pip and a suit, it is the responsibility of the logic
     interpreter to determine the value of a Card.
@@ -12,12 +18,17 @@ class Card(object):
     """
     # Class methods
     def __init__(self, pip, suit):
-        """Generate a Card
+        """ Generate a Card
 
         Args:
-            pip: (String): The shown value of the card.
-            suit: (String): The shown suit of the card.
+            pip: (str): The shown value of the card.
+            suit: (str): The shown suit of the card.
 
+        Attributes:
+            _pip: (str): The shown value of the card.
+            _suit: (str): The shown suit of the card.
+            _hidden: (bool): True: The card is flipped over with back visible
+                             False: The card is value and suit are visible
         """
         self._pip = pip
         self._suit = suit
@@ -27,7 +38,10 @@ class Card(object):
         super(Card, self).__init__()
 
     def __str__(self):
-        """The representation of a Card.
+        """ The representation of a Card.
+
+        Returns:
+            (str): The string representation of a card [<>] | [$pip$suit]
 
         """
         tmp = Template("[$pip$suit]")
@@ -38,10 +52,10 @@ class Card(object):
 
     # Private methods
     def flip(self):
-        """Flips a view state of a card.
+        """ Flips a view state of a card.
 
         Returns:
-            (Card): The card that was manipulated.
+            (card): The card that was manipulated.
 
         """
         self._hidden = not self._hidden
@@ -52,8 +66,8 @@ class Card(object):
         must be forced.
 
         Args:
-            force: (Boolean): True: Force the visibility of a hidden card.
-            force: (Boolean): False: Do not force the visibility of a card.
+            force: (bool): True: Force the visibility of a hidden card.
+            force: (bool): False: Do not force the visibility of a card.
 
         Returns:
             (str): The string representation of a card
@@ -74,11 +88,11 @@ class Card(object):
     # Properties
     @property
     def pip(self):
-        """Getter for card pip value.
+        """ Getter for card pip value.
 
         Returns:
             (char): The pip value.
-            (boolean): False: The pip value is hidden.
+            (bool): False: The pip value is hidden.
 
         """
         if self._hidden:
@@ -87,11 +101,11 @@ class Card(object):
 
     @property
     def suit(self):
-        """Getter for card suit value.
+        """ Getter for card suit value.
 
         Returns:
             (char): The suit value.
-            (boolean):  The suit value is hidden.
+            (bool): The suit value is hidden.
 
         """
         if self._hidden:

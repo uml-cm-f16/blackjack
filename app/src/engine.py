@@ -1,12 +1,19 @@
-import pygame
+#!/usr/bin/python3
+""" Pygame driven game engine
+
+"""
+# IMPORTS
+
 import sys
 import os
-import time
 
+import pygame
 
-from src.logic.blackjack import Blackjack
+from .blackjack import Blackjack
 
-class Display_Engine(object):
+# CLASS
+
+class Engine(object):
     '''
     Class that drives the displayed window and
     interactions with the window.
@@ -141,8 +148,8 @@ class Display_Engine(object):
                                 True, self.color_blue)
 
         size = self.font.size(button[self._b_terms["BUTTON_STR"]])
-        centering = (50 + button[self._b_terms["BUTTON_COORDINATES"]][0] - (size[0] / 2.),
-                     18 + button[self._b_terms["BUTTON_COORDINATES"]][1] - (size[1] / 2.))
+        centering = (50 + button[self._b_terms["BUTTON_COORDINATES"]][0] - (size[0] / 2),
+                     18 + button[self._b_terms["BUTTON_COORDINATES"]][1] - (size[1] / 2))
 
 
         rect = pygame.Rect(button[self._b_terms["BUTTON_COORDINATES"]],
@@ -156,45 +163,49 @@ class Display_Engine(object):
                                  text,
                                  centering])
 
-
-
-
     def _card_name(self, card):
         """ The string name of a card file
+
         """
         if card.pip is False:
             return self.card_back
         return card.pip + '_' + card.suit
+
     def _flag_hit(self):
         """ Hit request made
 
         """
         print("hit")
         self._action = 1
+
     def _flag_stand(self):
         """ Stand request made
 
         """
         print("stay")
         self._action = 2
+
     def _flag_clear(self):
         """ Clear request made
 
         """
         print("clear")
         self._action = 3
+
     def _flag_double_down(self):
         """ Double down request made
 
         """
         print("D_D")
         self._action = 4
+
     def _flag_replay(self):
         """ Replay request made
 
         """
         print("replay")
         self._action = 5
+
     # Public properties
     @property
     def action(self):
@@ -233,6 +244,7 @@ class Display_Engine(object):
         self.dealer_percentage = self.player_percentage = 100.00
 
         print("Clear Board")
+
     def game_loop(self, delay=0):
         """ game loop
         """
@@ -263,14 +275,20 @@ class Display_Engine(object):
                     button[self._b_terms["BUTTON_FUNC"]]()
 
         # Draw the necessary cards on the screen
-        self.screen.blit(self.table_images["table_dealer"], (self.person_x[2] - 10, self.dealer_y - 10))
-        self.screen.blit(self.table_images["table_player"], (self.person_x[2] - 10, self.player_y - 10))
+        self.screen.blit(self.table_images["table_dealer"],
+                         (self.person_x[2] - 10, self.dealer_y - 10))
+        self.screen.blit(self.table_images["table_player"],
+                         (self.person_x[2] - 10, self.player_y - 10))
 
-        self.screen.blit(self.table_images["single"], (self.person_x[0] - 10, self.player_y - 10))
-        self.screen.blit(self.table_images["single"], (self.person_x[1] - 10, self.player_y - 10))
+        self.screen.blit(self.table_images["single"],
+                         (self.person_x[0] - 10, self.player_y - 10))
+        self.screen.blit(self.table_images["single"],
+                         (self.person_x[1] - 10, self.player_y - 10))
 
-        self.screen.blit(self.table_images["single"], (self.person_x[0] - 10, self.dealer_y - 10))
-        self.screen.blit(self.table_images["single"], (self.person_x[1] - 10, self.dealer_y - 10))
+        self.screen.blit(self.table_images["single"],
+                         (self.person_x[0] - 10, self.dealer_y - 10))
+        self.screen.blit(self.table_images["single"],
+                         (self.person_x[1] - 10, self.dealer_y - 10))
 
         for index, card in enumerate(self.dealer_cards):
             self.screen.blit(self.card_images[self._card_name(card)],
@@ -466,7 +484,7 @@ class Display_Engine(object):
                 elif player[2] == -1:
                     state = "LOST"
                 print("player ", player[0], " ", state, " with ", player[1],
-                    " to dealers ", dealer_score)
+                      " to dealers ", dealer_score)
 
             self.button_active[3] = True
             replay = True
@@ -480,10 +498,3 @@ class Display_Engine(object):
 
             self.clear_board()
             self.game_loop()
-
-
-
-
-
-
-

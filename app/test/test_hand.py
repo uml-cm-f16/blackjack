@@ -3,10 +3,10 @@
 
 import unittest
 
-from ...src.logic.card import Card
+from ..src.card import Card
 
 # Importing class to test
-from ...src.logic.hand import Hand
+from ..src.hand import Hand
 
 class Test_Hand(unittest.TestCase):
     """Tests the card class methods.

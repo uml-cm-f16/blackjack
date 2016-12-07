@@ -1,17 +1,22 @@
 #!/usr/bin/python3
-"""This module tests the Card class."""
+""" This module tests the Card class.
+
+"""
+
+# IMPORTS
 
 import unittest
 
 # Importing class to test
-from ...src.logic.card import Card
+
+from ..src.card import Card
 
 class Test_Card(unittest.TestCase):
     """Tests the card class methods.
 
     """
     def test_getter_pip(self):
-        """Pip aka Value retrieval.
+        """ Pip aka Value retrieval.
 
         """
         pip = 'A'
@@ -31,7 +36,7 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(card.suit, suit)
 
     def test_str_representation(self):
-        """String representation of a card.
+        """ String representation of a card.
 
         """
         self.assertEqual(str(Card('A', 'C')), "[AC]")
@@ -40,7 +45,7 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(str(Card('2', 'S')), "[2S]")
 
     def test_flip(self):
-        """Card flipping.
+        """ Card flipping.
 
         """
 
@@ -54,7 +59,7 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(str(card), "[AC]")
 
     def test_peek(self):
-        """Card peeking test.
+        """ Card peeking test.
 
         Checks to see if cards can be seen when in a visible state.
         Checks to see if cards can be forced to a temporary visible state.

@@ -5,15 +5,15 @@
 
 """
 
-# Import the player base class of the dealer
-from .player import Player
+# IMPORTS
 
-# Importing the deck class
+from .player import Player
 from .deck import Deck
 
-# Defining the dealer
+# CLASS
+
 class Dealer(Player):
-    """A card dealer.
+    """ A card dealer.
 
     A player that also can deal cards.
 
@@ -23,7 +23,8 @@ class Dealer(Player):
         """Creates a dealer.
 
         Attributes:
-            _deck: (Deck): Deck of cards.
+            _id: (int): Overrides the players number to that of a dealer.
+            _deck: (deck): Deck of cards.
 
         """
         self._id = -1
@@ -38,45 +39,42 @@ class Dealer(Player):
 
     # Public methods
     def show_deck(self):
-        """Shows the deck of cards.
+        """ Shows the deck of cards.
 
         """
-
         self._deck.show(True)
 
     def shuffle(self):
-        """Shuffles the deck of cards.
+        """ Shuffles the deck of cards.
 
-        Returns:
-            (Deck): A shuffled deck.
         """
-        return self._deck.shuffle()
+        self._deck.shuffle()
 
     def draw(self):
-        """Retrieves a card from the top of the deck.
+        """ Retrieves a card from the top of the deck.
 
         Returns:
-            (Card): The top card of the deck.
+            (card): The top card of the deck.
         """
         return self._deck.draw()
 
     def burn(self, cards):
-        """Returns cards to the bottom of the deck.
+        """ Returns cards to the bottom of the deck.
 
         Args:
-            cards: [Card, ...]: The cards to return.
+            cards: (list (card)): The cards to return.
 
         """
         self._deck.burn(cards)
 
     def flip_deal(self, card):
-        """The dealer flips a card.
+        """ The dealer flips a card.
 
         Args:
-            card: (Card): The card to flip.
+            card: (card): The card to flip.
 
         Returns:
-            (Card): The card that was flipped.
+            (card): The card that was flipped.
 
         """
         return card.flip()
@@ -86,6 +84,7 @@ class Dealer(Player):
         """ Returns a decks stats dictionary
 
         Returns:
-            (Dictionary)    The amount of cards left in the deck of each suit.
+            (dict): The key count left in the deck.
+
         """
         return self._deck.deck_stats

@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-"""A player."""
+""" A card player
 
-from string import Template
+"""
+
+# IMPORTS
 
 from .hand import Hand
 
+# CLASS
+
 class Player(Hand):
-    """An individual player in the game.
+    """ An individual card player.
 
     A player is identifiable and holds a hand of cards.
 
@@ -17,14 +21,12 @@ class Player(Hand):
     # Private Class Attributes
     _player_counter = 0
 
-    # Class methods
     def __init__(self):
         """Initializes a player
 
         Generates a player name, and initializes a hand.
 
         """
-
         #Generate player number
         self._id = Player._player_counter
 
@@ -34,10 +36,10 @@ class Player(Hand):
         # Init to inherit classes
         super(Player, self).__init__()
 
-    # Properties
+    # Public properties
     @property
     def number(self):
-        """The identifying name of the player.
+        """ The identifying name of the player.
 
         Returns:
             (str): The player identifier.

@@ -3,16 +3,21 @@
 
 """
 
-from src.pygame.display_engine import Display_Engine
+# IMPORTS
+
+from app.src.engine import Engine
+
+# APPLICATION
 
 def main():
-    """ main
+    """ Kicks off a GUI Blackjack game
 
     """
+
     # Load and start pygame engine
-    engine = Display_Engine()
+    engine = Engine()
     engine.run()
 
-
+# start main function
 if __name__ == '__main__':
     main()

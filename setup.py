@@ -1,36 +1,55 @@
 #!/usr/bin/python3
+""" The setup program for the application.abs
+
+"""
+
+# IMPORTS
 
 import sys
 
-from src.app.installer import Installer
-from src.app.updater import Updater
+from app.src.setup import Setup
 
-# The package install/ upgrade list
-reqs = ["pip", "pygame", "pytest", "pylint", "Sphinx"]
+def main():
+    """ Application Installer/ Updater
 
-if len(sys.argv) <= 1:
-    print("\nError: No Action given.")
-    sys.exit(1)
+    """
 
-elif sys.argv[1] == 'install':
+    # The package install/ upgrade list
+    reqs = ["pip",
+            "pygame",
+            "pytest",
+            "pylint",
+            "Sphinx"]
+
+    setup = Setup()
+
+    if len(sys.argv) <= 1:
+        setup.option("install", "Installs and upgrades all dependencies.")
+        setup.option("save {message}", "Updates git repositories.")
+        sys.exit(0)
+
     # Install packages
-    installer = Installer(reqs)
-    sys.exit()
+    if sys.argv[1] == "install":
+        setup.install("Installing packages", reqs)
+        sys.exit(0)
 
-elif sys.argv[1] == 'save':
-    if len(sys.argv) <= 2:
-        print("\nError: No Git message given.")
-        sys.exit(2)
-    updater = Updater()
-    # Generate html documentation
-    updater.generate()
-    # Update to master branch
-    updater.master(sys.argv[2])
-    # Update gh-pages
-    updater.ghpages()
-    print("Done...")
-    sys.exit()
+    # Install packages
+    if sys.argv[1] == "test":
+        setup.test()
+        sys.exit(0)
 
-else:
-    print("\nError: Invalid action given.")
-    sys.exit(2)
+    # Update git and documentation
+    if sys.argv[1] == "save":
+        if len(sys.argv) <= 2:
+            setup.error("No Git message given.", 1)
+
+        # Generate html documentation
+        setup.generate()
+        setup.git(sys.argv[2])
+        sys.exit(0)
+
+    setup.error("Invalid action given.", 2)
+
+# start main function
+if __name__ == "__main__":
+    main()
