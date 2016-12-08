@@ -18,8 +18,8 @@ def main():
     reqs = ["pip",
             "pygame",
             "pytest",
-            "pylint",
-            "Sphinx"]
+            #"Sphinx",
+            "pylint"]
 
     setup = Setup()
 
@@ -44,7 +44,7 @@ def main():
             setup.error("No Git message given.", 1)
 
         # Generate html documentation
-        setup.generate()
+        #setup.generate()
         setup.git(sys.argv[2])
         sys.exit(0)
 
