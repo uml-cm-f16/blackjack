@@ -13,7 +13,7 @@ from app.src.logic.player import Player
 
 from app.src.logic.hand import Hand
 
-class Test_Player(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
     """ Tests the card class methods.
 
     """

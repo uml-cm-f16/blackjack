@@ -12,7 +12,6 @@ from .dealer import Dealer
 
 #   CLASS
 
-
 class Blackjack(object):
     """ BlackJack rule set for dealer.
 
@@ -198,7 +197,7 @@ class Blackjack(object):
 
         """
         # Get next player
-        self._player_current += self._player_count
+        self._player_current += 1
         if self._player_current == self._player_count:
             self._player_current = self._terms["DEALER"]
 
@@ -344,15 +343,15 @@ class Blackjack(object):
                 score = self._target_hand.total_closest(self._values,
                                                         self._terms["SCORE_MAX"])
 
-                #   Win loss draw conditions
-                print(score, dealer_result)
+                # Win loss draw conditions
+                # print(score, dealer_result)
                 # player busts
                 if score > self._terms["SCORE_MAX"]:
-                    print("player bust")
+                    # print("player bust")
                     state = self._terms["LOSS"]
                 # dealer busts
                 elif dealer_result > self._terms["SCORE_MAX"]:
-                    print("dealer bust")
+                    # print("dealer bust")
                     state = self._terms["WIN"]
                     # player busts
                     if score > self._terms["SCORE_MAX"]:
@@ -360,18 +359,18 @@ class Blackjack(object):
 
                 # No one busts
                 else:
-                    print("no bust")
+                    # print("no bust")
                     # player ties dealer
                     if score == dealer_result:
-                        print("no bust - DRAW")
+                        # print("no bust - DRAW")
                         state = self._terms["DRAW"]
                     # player beats dealer
                     elif score > dealer_result:
-                        print("no bust - WIN")
+                        # print("no bust - WIN")
                         state = self._terms["WIN"]
                     # player does not beat dealer
                     elif score < dealer_result:
-                        print("no bust - LOSS")
+                        # print("no bust - LOSS")
                         state = self._terms["LOSS"]
 
                 # Append current player data
@@ -385,7 +384,6 @@ class Blackjack(object):
             ret.append(dealer)
 
             # return win loss results
-            print(ret)
             return ret
 
         else:
@@ -396,15 +394,21 @@ class Blackjack(object):
         """ Resets the table, and returns all hands back to the dealer to add
         into the deck.
 
+        Returns:
+            (list): [self._target_hand_stats: (list):,   The hand stat of the player
+                    ...,
+                    self._target_hand_stats: (list):]    The hand stat of the dealer
         """
         # Fold all hands
+        ret = []
         while self._target_hand_next() != self._terms["DEALER"]:
             self._target_hand.fold()
+            ret.append(self._target_hand_stats)
         self._target_hand.fold()
-
-        # Shuffling.
-        self._dealer.shuffle()
+        ret.append(self._target_hand_stats)
 
         # Points round at player 0
         self._target_hand_next()
+
+        return ret
 

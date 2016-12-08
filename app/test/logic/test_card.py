@@ -11,7 +11,7 @@ import unittest
 
 from app.src.logic.card import Card
 
-class Test_Card(unittest.TestCase):
+class TestCard(unittest.TestCase):
     """ Tests the card class methods.
 
     """

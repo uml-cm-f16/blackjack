@@ -29,7 +29,6 @@ class Dealer(Player):
         """
         # Remove dealer from player count
         Player._player_counter -= 1
-        self._id = -1
 
         self._deck = Deck()
 
@@ -37,6 +36,17 @@ class Dealer(Player):
         super().__init__()
 
     # Public methods
+    # Public properties
+    @property
+    def number(self):
+        """ The identifying name of the player.
+
+        Returns:
+            (int): The player identifier.
+
+        """
+        return -1
+
     def show_deck(self, state=False):
         """ Shows the deck of cards.
 

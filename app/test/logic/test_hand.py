@@ -8,7 +8,7 @@ from app.src.logic.card import Card
 # Importing class to test
 from app.src.logic.hand import Hand
 
-class Test_Hand(unittest.TestCase):
+class TestHand(unittest.TestCase):
     """ Tests the card class methods.
 
     """

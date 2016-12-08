@@ -8,7 +8,7 @@ from app.src.logic.card import Card
 # Importing class to test
 from app.src.logic.deck import Deck
 
-class Test_Deck(unittest.TestCase):
+class TestDeck(unittest.TestCase):
     """ Tests the Deck class methods.
 
     """

@@ -48,7 +48,7 @@ class Player(Hand):
         """ The identifying name of the player.
 
         Returns:
-            (str): The player identifier.
+            (intstr): The player identifier.
 
         """
         return self._id

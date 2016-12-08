@@ -131,7 +131,7 @@ class Hand(list):
             return get_val(key, score)
 
         # Get all possible scores
-        score = 0
+        score = [0]
         for card in self:
             score = branch_scores(card.pip, score)
 

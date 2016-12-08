@@ -14,7 +14,7 @@ from app.src.logic.dealer import Dealer
 from app.src.logic.player import Player
 from app.src.logic.card import Card
 
-class Test_Dealer(unittest.TestCase):
+class TestDealer(unittest.TestCase):
     """ Tests the Deck class methods.
 
     """
@@ -46,8 +46,8 @@ class Test_Dealer(unittest.TestCase):
         """ Test players were assigned sequentially a number >= 0 starting at 0
 
         """
+        player_0 = Player(True)
         dealer = Dealer()
-        player_0 = Player()
         player_1 = Player()
 
         # Dealer does not interrupt the count in Player
@@ -147,9 +147,11 @@ class Test_Dealer(unittest.TestCase):
 
         # Check dictionary was updated
         card = dealer_1.draw()
+        card.flip()
+
         stats = dealer_1.deck_stats
         for key, value in stats.items():
-            if card.flip().pip == key:
+            if card.pip == key:
                 self.assertEqual(value, 3)
             else:
                 self.assertEqual(value, 4)

@@ -10,15 +10,14 @@ from decimal import Decimal, ROUND_HALF_UP
 
 import pygame
 
-
-from .blackjack import Blackjack
+from ..logic.blackjack import Blackjack
 
 # CLASS
 
 class Engine(object):
-    '''
-    Class that drives the displayed window and
-    interactions with the window.
+    '''  Class that drives the displayed window and interactions with the window.
+
+        Attributes
     '''
 
     _pips = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
@@ -26,7 +25,7 @@ class Engine(object):
 
 
     def __init__(self):
-        """ initialize engine
+        """ Initialize engine
 
         """
 
@@ -38,8 +37,8 @@ class Engine(object):
         # Cards
         self.card_images = {}
         self.table_images = {}
-        self.card_dir = os.path.join(os.path.dirname(__file__), "..", "img", "cards")
-        self.table_dir = os.path.join(os.path.dirname(__file__), "..", "img", "table")
+        self.card_dir = os.path.join(os.path.dirname(__file__), "..", "..", "img", "cards")
+        self.table_dir = os.path.join(os.path.dirname(__file__), "..", "..", "img", "table")
         self.card_dimensions = (190, 320)
         self.card_back = '-_-'
 
@@ -265,8 +264,8 @@ class Engine(object):
 
         print("Clear Board")
 
-    def game_loop(self, delay=0):
-        """ game loop
+    def update_frame(self, delay=0):
+        """ Game frame
         """
         coordinate = -1, -1
 
@@ -412,7 +411,7 @@ class Engine(object):
             self.percent_active = False
             self.result_active = False
 
-            self.game_loop(1000)
+            self.update_frame(1000)
 
             # Start game
             ret = bj_game.round_start()
@@ -431,25 +430,25 @@ class Engine(object):
 
             # Deal initial hands
             self.update(deal_player_1)
-            self.game_loop(500)
+            self.update_frame(500)
 
             self.update(deal_dealer_1)
-            self.game_loop(500)
+            self.update_frame(500)
 
             self.update(deal_player_2)
-            self.game_loop(500)
+            self.update_frame(500)
 
             self.update(deal_dealer_2)
-            self.game_loop(500)
+            self.update_frame(500)
 
-            self.game_loop(500)
+            self.update_frame(500)
 
             # Full start
             self.update(ret[0])
-            self.game_loop(500)
+            self.update_frame(500)
 
             self.update(ret[1])
-            self.game_loop()
+            self.update_frame()
 
             play = True
             while play is True:
@@ -461,13 +460,13 @@ class Engine(object):
                 self.button_active[3] = False
 
                 self.update(ret)
-                self.game_loop(500)
+                self.update_frame(500)
 
                 while cont is True:
                     print_player(ret)
 
                     self.update(ret)
-                    self.game_loop(500)
+                    self.update_frame(500)
                     self.percent_active = True
                     self.player_stats = ret
 
@@ -483,7 +482,7 @@ class Engine(object):
 
                         ret = bj_game.player_hit()
                         self.update(ret)
-                        self.game_loop(0)
+                        self.update_frame(0)
 
                     # stand
                     elif action == 2:
@@ -496,7 +495,7 @@ class Engine(object):
 
                         ret = bj_game.player_stay()
                         self.update(ret)
-                        self.game_loop(0)
+                        self.update_frame(0)
 
                     # bust
                     if ret[3] > 21:
@@ -509,7 +508,7 @@ class Engine(object):
 
                         ret = bj_game.player_stay()
                         self.update(ret)
-                        self.game_loop(0)
+                        self.update_frame(0)
 
                     # player end turn
                     if cont is False:
@@ -527,7 +526,7 @@ class Engine(object):
 
             ret = bj_game.dealer_stats()
             self.update(ret)
-            self.game_loop(500)
+            self.update_frame(500)
 
             dealer = self.dealer_stats = round_result[1]
             player = self.player_stats = round_result[0]
@@ -546,11 +545,11 @@ class Engine(object):
             replay = True
             while replay is True:
                 print('waiting')
-                self.game_loop(500)
+                self.update_frame(500)
                 if self.action == 5:
                     replay = False
 
             del bj_game
 
             self.clear_board()
-            self.game_loop()
+            self.update_frame()
