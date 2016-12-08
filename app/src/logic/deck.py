@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" A deck of cards.
+""" A deck of playing cards.
 
 """
 
@@ -53,7 +53,7 @@ class Deck(object):
                     self._insert(Card(pip, suit))
 
         # Init to inherit classes
-        super(Deck, self).__init__()
+        super().__init__()
 
     def __str__(self):
         """ The str representation of a Deck.
@@ -62,7 +62,7 @@ class Deck(object):
             (str): The string representation of a deck
 
         """
-        return ', '.join(str(card) for card in self._deck)
+        return self.show()
 
     # Private methods
     def _insert(self, card, position=0):
@@ -74,7 +74,11 @@ class Deck(object):
 
         """
         self._inc_count(card)
-        card.flip()
+
+        # False is the hidden state
+        if not card.pip is False:
+            card.flip()
+
         self._deck.insert(position, card)
 
     def _inc_count(self, card):
@@ -113,7 +117,7 @@ class Deck(object):
         self._count[pip] = self._count.get(pip, 0) - 1
 
     def _has(self, card):
-        """Checks to see if card is in the deck.
+        """ Checks to see if card is in the deck.
 
         Args:
             card: (card): The card to look for.
@@ -167,8 +171,8 @@ class Deck(object):
         """Marks a position in the deck to signal reshuffle.
 
         Args:
-            r_flag: (Boolean): False: Marker is placed at bottom of deck.
-            r_flag: (Boolean): True: Randomize the location of the marker.
+            r_flag: (bool): False: Marker is placed at bottom of deck.
+            r_flag: (bool): True: Randomize the location of the marker.
 
         """
         # Remove marker if in deck
@@ -190,12 +194,12 @@ class Deck(object):
         all cards have been used.
 
         Args:
-            mark: (Boolean): True: Mark a deck.
-            r_flag: (Boolean): True: Randomly mark deck.
-
+            mark: (bool): True: Mark a deck.
+            r_flag: (bool): True: Randomly mark deck.
 
         """
         shuffle(self._deck)
+
         if mark:
             self._mark(r_flag)
 
@@ -203,15 +207,15 @@ class Deck(object):
         """ Shows the deck of cards.
 
         Args:
-            force: (Boolean): True: Forces visibility of the cards.
+            force: (bool): True: Forces visibility of the cards.
 
         Returns:
             (str): The deck representation
         """
         if force:
             return ', '.join(card.peek(force) for card in self._deck)
-        else:
-            return str(self._deck)
+
+        return ', '.join(card.peek() for card in self._deck)
 
 
     def draw(self):
@@ -233,7 +237,7 @@ class Deck(object):
         """
         if isinstance(cards, Card):
             self._insert(cards)
-        if isinstance(cards, list):
+        elif isinstance(cards, list):
             for card in cards:
                 self._insert(card)
 

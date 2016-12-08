@@ -30,7 +30,7 @@ class Setup(object):
         self._build = "docs/build/"
 
         # Init to inherit classes
-        super(Setup, self).__init__()
+        super().__init__()
 
     # Private methods
     def _install(self, package):
@@ -136,4 +136,5 @@ class Setup(object):
         """ Run unit tests
 
         """
-        os.system("python -m unittest discover")
+        # python -m unittest discover -s app/test
+        os.system("python -m unittest discover -s app/test")

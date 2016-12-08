@@ -35,7 +35,7 @@ class Card(object):
         self._hidden = False
 
         # Init to inherit classes
-        super(Card, self).__init__()
+        super().__init__()
 
     def __str__(self):
         """ The representation of a Card.

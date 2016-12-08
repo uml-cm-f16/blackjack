@@ -6,8 +6,10 @@
 
 import sys
 import os
+from decimal import Decimal, ROUND_HALF_UP
 
 import pygame
+
 
 from .blackjack import Blackjack
 
@@ -49,6 +51,10 @@ class Engine(object):
         self.player_values = []
         self.dealer_closest = self.player_closest = 0
         self.dealer_percentage = self.player_percentage = 100.00
+        self.result_active = False
+        self.player_result = 0
+        self.player_stats = []
+        self.dealer_stats = []
 
         self.person_x = [32, 242, 472, 512, 552, 592, 632, 672, 712, 752, 792]
         self.dealer_y = 40
@@ -86,7 +92,7 @@ class Engine(object):
 
         # object styling
         self.font = pygame.font.Font(pygame.font.match_font('Verdana'), 20)
-        self.color_background_button = self.color_white
+        self.color_background_button = self.color_blue
         self.color_background_table = self.color_333
 
          # Build person coordinates
@@ -114,6 +120,20 @@ class Engine(object):
             self._add_button(button)
 
     # Private methods
+    def _format(self, val, format='.001', method=ROUND_HALF_UP):
+        """ Formats to specific decimal spaces
+
+        Args:
+            val: (decimal): The number to truncate
+            format: (str): ".001": The decimal spot to show up to.
+            method: (enum): ROUND_HALF_UP: How to truncate val
+
+        Returns:
+            (float): The truncated float
+
+        """
+        return float(Decimal(val.quantize(Decimal('.001'), method)))
+
     def _add_table(self, table_file_name, size):
         """ Table images
 
@@ -145,7 +165,7 @@ class Engine(object):
         }
 
         text = self.font.render(button[self._b_terms["BUTTON_STR"]],
-                                True, self.color_blue)
+                                True, self.color_white)
 
         size = self.font.size(button[self._b_terms["BUTTON_STR"]])
         centering = (50 + button[self._b_terms["BUTTON_COORDINATES"]][0] - (size[0] / 2),
@@ -300,7 +320,7 @@ class Engine(object):
 
         # Create the pygame text for displaying the percentage win
         if self.percent_active is True:
-            bust = 100 - self.player_percentage
+            bust = self._format(Decimal(100 - self.player_percentage))
             percentage_win = "(Bust on hit " + str(bust) + "%)"
 
             # Variant Warning red
@@ -318,6 +338,37 @@ class Engine(object):
                              (606 - percentage_win_text_w/2,
                               397.5 - percentage_win_text_h / 2))
 
+            results_text = self.font.render(str(self.player_stats[2]), 0, self.color_white)
+            results_text_text_w = results_text.get_rect().width
+            results_text_text_h = results_text.get_rect().height
+            self.screen.blit(results_text,
+                             (875 - results_text_text_w/2,
+                              397.5 - results_text_text_h / 2))
+        # Who won
+        if self.result_active is True:
+            result = self.player_result
+            player = self.player_stats[3]
+            dealer = self.dealer_stats[3]
+
+            result_text = "result: "
+            color = self.color_black
+            outcome = "DRAW"
+
+            # Variant Warning red
+            if result == -1:
+                color = self.color_red
+                outcome = "LOSS"
+            elif result == 1:
+                color = self.color_green
+                outcome = "WIN"
+
+            result_text = self.font.render(outcome + " with " + str(player) +
+                                           " to " + str(dealer), 0, color)
+            result_text_w = result_text.get_rect().width
+            result_text_h = result_text.get_rect().height
+            self.screen.blit(result_text,
+                             (606 - result_text_w/2,
+                              397.5 - result_text_h / 2))
         # Generate the window
         pygame.display.flip()
         pygame.time.wait(delay)
@@ -359,6 +410,7 @@ class Engine(object):
             self.button_active[2] = False
             self.button_active[3] = False
             self.percent_active = False
+            self.result_active = False
 
             self.game_loop(1000)
 
@@ -407,7 +459,6 @@ class Engine(object):
                 self.button_active[0] = True
                 self.button_active[1] = True
                 self.button_active[3] = False
-                self.percent_active = True
 
                 self.update(ret)
                 self.game_loop(500)
@@ -417,10 +468,12 @@ class Engine(object):
 
                     self.update(ret)
                     self.game_loop(500)
+                    self.percent_active = True
+                    self.player_stats = ret
 
                     action = self.action
+                    # hit
                     if action == 1:
-                        # hit
                         cont = True
 
                         self.button_active[0] = True
@@ -431,8 +484,9 @@ class Engine(object):
                         ret = bj_game.player_hit()
                         self.update(ret)
                         self.game_loop(0)
+
+                    # stand
                     elif action == 2:
-                        # stand
                         cont = False
 
                         self.button_active[0] = False
@@ -444,8 +498,8 @@ class Engine(object):
                         self.update(ret)
                         self.game_loop(0)
 
+                    # bust
                     if ret[3] > 21:
-                        # bust
                         cont = False
 
                         self.button_active[0] = False
@@ -457,8 +511,8 @@ class Engine(object):
                         self.update(ret)
                         self.game_loop(0)
 
+                    # player end turn
                     if cont is False:
-                        # player end turn
                         self.button_active[0] = False
                         self.button_active[1] = False
                         self.button_active[3] = False
@@ -475,17 +529,19 @@ class Engine(object):
             self.update(ret)
             self.game_loop(500)
 
-            dealer_score = round_result[-1][1]
-            del round_result[-1]
-            for player in round_result:
-                state = "DRAW"
-                if player[2] == 1:
-                    state = "WON"
-                elif player[2] == -1:
-                    state = "LOST"
-                print("player ", player[0], " ", state, " with ", player[1],
-                      " to dealers ", dealer_score)
+            dealer = self.dealer_stats = round_result[1]
+            player = self.player_stats = round_result[0]
 
+            state = "DRAW"
+            self.player_result = player[5]
+            if player[5] == 1:
+                state = "WON"
+            elif player[5] == -1:
+                state = "LOST"
+            print("player ", player[0], " ", state, " with ", player[1],
+                  " to dealers ", dealer[1])
+
+            self.result_active = True
             self.button_active[3] = True
             replay = True
             while replay is True:

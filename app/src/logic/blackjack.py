@@ -45,7 +45,7 @@ class Blackjack(object):
         while self._target_hand_next() != self._terms["DEALER"]:
             self._player.append(Player())
 
-        super(Blackjack, self).__init__()
+        super().__init__()
 
     # Private properties
     @property
@@ -345,16 +345,34 @@ class Blackjack(object):
                                                         self._terms["SCORE_MAX"])
 
                 #   Win loss draw conditions
-                if dealer_result > self._terms["SCORE_MAX"] and score > self._terms["SCORE_MAX"]:
+                print(score, dealer_result)
+                # player busts
+                if score > self._terms["SCORE_MAX"]:
+                    print("player bust")
                     state = self._terms["LOSS"]
+                # dealer busts
                 elif dealer_result > self._terms["SCORE_MAX"]:
+                    print("dealer bust")
                     state = self._terms["WIN"]
-                elif score > self._terms["SCORE_MAX"] or score < dealer_result:
-                    state = self._terms["LOSS"]
-                elif score > dealer_result:
-                    state = self._terms["WIN"]
-                elif score == dealer_result:
-                    state = self._terms["DRAW"]
+                    # player busts
+                    if score > self._terms["SCORE_MAX"]:
+                        state = self._terms["LOSS"]
+
+                # No one busts
+                else:
+                    print("no bust")
+                    # player ties dealer
+                    if score == dealer_result:
+                        print("no bust - DRAW")
+                        state = self._terms["DRAW"]
+                    # player beats dealer
+                    elif score > dealer_result:
+                        print("no bust - WIN")
+                        state = self._terms["WIN"]
+                    # player does not beat dealer
+                    elif score < dealer_result:
+                        print("no bust - LOSS")
+                        state = self._terms["LOSS"]
 
                 # Append current player data
                 player = self._target_hand_stats
@@ -367,6 +385,7 @@ class Blackjack(object):
             ret.append(dealer)
 
             # return win loss results
+            print(ret)
             return ret
 
         else:

@@ -17,7 +17,7 @@ class Hand(list):
         """
 
         # Init to inherit classes
-        super(Hand, self).__init__()
+        super().__init__()
 
     def __str__(self):
         """ The string representation of a Hand.
@@ -29,6 +29,29 @@ class Hand(list):
         return ", ".join(str(card) for card in self)
 
     # Public methods
+    def remove(self, crd):
+        """ Removes a card from the Hand
+
+        Args:
+            crd: (card): The card to check for
+
+        Returns:
+            (bool): False: The card was not found
+            (card): The matching card
+
+        """
+        if self is []:
+            return False
+
+        card_index = 0
+        for card in self:
+            if crd.pip == card.pip and crd.suit == card.suit:
+                self.pop(card_index)
+                return True
+            card_index += 1
+
+        return False
+
     def flip(self, index):
         """ Flip a card by index.
 
@@ -45,9 +68,11 @@ class Hand(list):
             (Card ...): The cards in the hand.
 
         """
-        cards = self
-        self.clear()
-        return cards
+        ret = []
+        while self:
+            ret.append(self.pop(0))
+
+        return ret
 
     def total(self, values):
         """ A list of possible scores.
@@ -59,19 +84,19 @@ class Hand(list):
         def flatten(lst):
             """ Flattens a multi level lest to one level.
 
+            http://stackoverflow.com/questions/12472338/flattening-a-list-recursively
+
             Args:
                 lst: (list (int)): A list to flatten
 
             """
-            if isinstance(lst, list):
-                result = []
-                for score in lst:
-                    if isinstance(score, list):
-                        score = result.extend(flatten(score))
-                    result.append(score)
-                return result
+            if lst == []:
+                return lst
 
-            return [lst]
+            if isinstance(lst[0], list):
+                return flatten(lst[0]) + flatten(lst[1:])
+
+            return lst[:1] + flatten(lst[1:])
 
         def get_val(key, score):
             """ Get the card value added to the score.
@@ -111,7 +136,9 @@ class Hand(list):
             score = branch_scores(card.pip, score)
 
         # Return an non nested list of scores
-        return flatten(score)
+        ret = list(set(flatten(score)))
+        ret.sort()
+        return ret
 
     def total_closest(self, values, max_score):
         """ Get highest score up to max score if possible, otherwise get the
@@ -126,6 +153,9 @@ class Hand(list):
         score = self.total(values)
 
         # no score meets criteria
+        if not isinstance(score, list):
+            score = [score]
+
         minimum = min(score)
         if minimum > max_score:
             return minimum

@@ -3,13 +3,13 @@
 
 import unittest
 
-from ..src.card import Card
+from app.src.logic.card import Card
 
 # Importing class to test
-from ..src.deck import Deck
+from app.src.logic.deck import Deck
 
 class Test_Deck(unittest.TestCase):
-    """Tests the Deck class methods.
+    """ Tests the Deck class methods.
 
     """
     # The expected order of cards
@@ -34,7 +34,7 @@ class Test_Deck(unittest.TestCase):
     maxDiff = None
 
     def test_str_representation(self):
-        """A decks representation
+        """ A decks string representation
 
         """
 
@@ -56,8 +56,8 @@ class Test_Deck(unittest.TestCase):
                          self.__class__.fifty_two_cards_visible)
 
         # A double deck of 104 cards
-        self.assertEqual(str(Deck(2)), self.__class__.fifty_two_cards_hidden + ', ' +
-                         self.__class__.fifty_two_cards_hidden)
+        self.assertEqual(str(Deck(2)), self.__class__.fifty_two_cards_hidden +
+                         ', ' + self.__class__.fifty_two_cards_hidden)
 
     def test_shuffle(self):
         """ Test that a deck was shuffled. This test is not perfect because of
@@ -76,7 +76,7 @@ class Test_Deck(unittest.TestCase):
                          self.__class__.fifty_two_cards_visible)
 
         # when a deck is shuffled the card order is different, this will fail 1
-        # out of 52! or essentialy never
+        # out of 52! or essentially never
         deck_one.shuffle()
         self.assertNotEqual(str(deck_one.show(True)),
                             self.__class__.fifty_two_cards_visible)
@@ -96,6 +96,15 @@ class Test_Deck(unittest.TestCase):
         # All cards are found, without duplication
         self.assertEqual(not_found, 0)
         self.assertEqual(found, 52)
+
+    def test_show(self):
+        """ Shows the deck of cards, if cards are facedown it can be shown with
+        them face up.
+
+        """
+        deck = Deck(1)
+        self.assertEqual(deck.show(), self.__class__.fifty_two_cards_hidden)
+        self.assertEqual(deck.show(True), self.__class__.fifty_two_cards_visible)
 
     def test_draw(self):
         """ Test if every card can can be drawn correctly from the deck and that
@@ -141,81 +150,26 @@ class Test_Deck(unittest.TestCase):
         self.assertEqual(str(deck_one.show(True)), str(deck_two.show(True)))
 
     def test_marker(self):
-        """Make sure marker card was set.
+        """ Make sure marker card was set and can be retrieved for comparison.
+
         """
         deck = Deck(1)
         self.assertEqual(str(deck.marker), "[--]")
 
-    def test_total(self):
 
-        values = {"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
-                  "8": 8, "9": 9, "T": 10, "J": 10, "Q": 10, "K": 10,
-                  "A": [1, 11]}
+    def test_deck_stats(self):
+        """ Can retrieve a list of pip counts.
 
-        deck = Deck(1)
-
-        self.assertEqual(deck.total(0, Card('A', 'H'), values), [1, 11])
-        self.assertEqual(deck.total(0, Card('K', 'H'), values), 10)
-        self.assertEqual(deck.total(0, Card('2', 'H'), values), 2)
-
-        self.assertEqual(deck.total([1, 11], Card('A', 'H'), values), [[2, 12], [12, 22]])
-        self.assertEqual(deck.total([1, 11], Card('K', 'H'), values), [11, 21])
-        self.assertEqual(deck.total(5, Card('A', 'H'), values), [6, 16])
-
-    def test_possible_win(self):
-        values = {"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
-                  "8": 8, "9": 9, "T": 10, "J": 10, "Q": 10, "K": 10,
-                  "A": [1, 11]}
-
-        deck = Deck(1)
-        c_a = Card("A", "H")
-        c_k = Card("K", "H")
-        c_5 = Card("5", "H")
-        c_3 = Card("3", "H")
-
-        self.assertEqual(deck.possible_win(c_a, values, 21, 0), True)
-        self.assertEqual(deck.possible_win(c_a, values, 21, 20), True)
-        self.assertEqual(deck.possible_win(c_a, values, 21, 21), False)
-
-    def test_percent(self):
-        """The precentage chance to retrieve a non busting card.
         """
-        values = {"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
-                  "8": 8, "9": 9, "T": 10, "J": 10, "Q": 10, "K": 10,
-                  "A": [1, 11]}
-
         deck = Deck(1)
-        c_a = Card("A", "H")
-        c_k = Card("K", "H")
-        c_5 = Card("5", "H")
-        c_3 = Card("3", "H")
+        count = {"2": 4, "3": 4, "4": 4, "5": 4, "6": 4, "7": 4,
+                 "8": 4, "9": 4, "T": 4, "J": 4, "Q": 4, "K": 4,
+                 "A": 4}
 
-        c1 = deck.draw()
-        c1.flip()
-        print(str(c1))
-        self.assertEqual(deck.percent([c1], values), 100)
+        self.assertEqual(deck.deck_stats, count)
 
-        c2 = deck.draw()
-        c2.flip()
-        print(str(c2))
-        self.assertEqual(deck.percent([c1, c2], values), 100)
-
-        c3 = deck.draw()
-        c3.flip()
-        print(str(c3))
-        self.assertEqual(deck.percent([c1, c2, c3], values), 100)
-
-        c4 = deck.draw()
-        c4.flip()
-        print(str(c4))
-        self.assertEqual(deck.percent([c1, c2, c3, c4], values), 50)
-
-        c5 = deck.draw()
-        c5.flip()
-        print(str(c5))
-        self.assertEqual(deck.percent([c1, c2, c3, c4, c5], values), 8.511)
-
-
+if __name__ == '__main__':
+    unittest.main()
 
 
 

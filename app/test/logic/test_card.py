@@ -9,10 +9,10 @@ import unittest
 
 # Importing class to test
 
-from ..src.card import Card
+from app.src.logic.card import Card
 
 class Test_Card(unittest.TestCase):
-    """Tests the card class methods.
+    """ Tests the card class methods.
 
     """
     def test_getter_pip(self):
@@ -26,7 +26,7 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(card.pip, pip)
 
     def test_getter_suit(self):
-        """Suit retrieval.
+        """ Suit retrieval.
 
         """
         suit = 'C'
@@ -48,7 +48,6 @@ class Test_Card(unittest.TestCase):
         """ Card flipping.
 
         """
-
         card = Card('A', 'C')
         self.assertEqual(str(card), "[AC]")
 
@@ -63,7 +62,7 @@ class Test_Card(unittest.TestCase):
 
         Checks to see if cards can be seen when in a visible state.
         Checks to see if cards can be forced to a temporary visible state.
-        Checks that peek is temoporary and does not modify the card.
+        Checks that peek is temporary and does not modify the card.
 
         """
         out1 = "[AC]"
@@ -89,3 +88,6 @@ class Test_Card(unittest.TestCase):
         self.assertEqual(str(card), out1)
         self.assertEqual(str(card.peek()), out1)
         self.assertEqual(str(card.peek(True)), out1)
+
+if __name__ == '__main__':
+    unittest.main()

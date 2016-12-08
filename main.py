@@ -5,7 +5,7 @@
 
 # IMPORTS
 
-from app.src.engine import Engine
+from app.src.pygame.engine import Engine
 
 # APPLICATION
 

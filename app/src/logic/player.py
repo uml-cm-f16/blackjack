@@ -21,12 +21,18 @@ class Player(Hand):
     # Private Class Attributes
     _player_counter = 0
 
-    def __init__(self):
-        """Initializes a player
+    def __init__(self, reset=False):
+        """ Initializes a player
 
         Generates a player name, and initializes a hand.
 
+        Args:
+            reset: (bool): False: Used by test class to test counter
+
         """
+        if reset:
+            Player._player_counter = 0
+
         #Generate player number
         self._id = Player._player_counter
 
@@ -34,7 +40,7 @@ class Player(Hand):
         Player._player_counter += 1
 
         # Init to inherit classes
-        super(Player, self).__init__()
+        super().__init__()
 
     # Public properties
     @property

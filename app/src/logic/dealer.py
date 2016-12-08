@@ -20,29 +20,32 @@ class Dealer(Player):
     """
     # Class methods
     def __init__(self):
-        """Creates a dealer.
+        """ Creates a dealer.
 
         Attributes:
             _id: (int): Overrides the players number to that of a dealer.
             _deck: (deck): Deck of cards.
 
         """
-        self._id = -1
-
         # Remove dealer from player count
         Player._player_counter -= 1
+        self._id = -1
 
         self._deck = Deck()
 
         # Init to inherit classes
-        super(Dealer, self).__init__()
+        super().__init__()
 
     # Public methods
-    def show_deck(self):
+    def show_deck(self, state=False):
         """ Shows the deck of cards.
 
+        Args:
+            state: (bool): False: Show the deck in hidden state
+            state: (bool): True: Show the deck in visible state
+
         """
-        self._deck.show(True)
+        return self._deck.show(state)
 
     def shuffle(self):
         """ Shuffles the deck of cards.
