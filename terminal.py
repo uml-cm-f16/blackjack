@@ -2,6 +2,8 @@
 """ Terminal application
 """
 
+from decimal import Decimal, ROUND_HALF_UP
+
 from app.src.logic.blackjack import Blackjack
 
 def print_ret(msg, ret):
@@ -12,12 +14,14 @@ def print_ret(msg, ret):
         ret: (list 5): The return statement of the blackjack game steps
 
     """
+    val = Decimal(100 - ret[4])
     print("")
     print("   ---", msg, "---")
     print("\t", str(ret[1]))
     print("\t", "Scores: ", ret[2])
     if msg == 'Player':
-        print("\t", "Bust on hit %: ", ret[4])
+        print("\t", "Bust on hit %: ",
+              float(Decimal(val.quantize(Decimal('.001'), ROUND_HALF_UP))))
 
 def main():
     """ The terminal version of the application, Runs blackjack

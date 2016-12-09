@@ -281,12 +281,12 @@ class Engine(object):
             self.dealer_values = stats[2]
             self.dealer_closest = stats[3]
             self.dealer_percentage = stats[4]
-            self.player_stats = stats
         else:
             self.player_cards = stats[1]
             self.player_values = stats[2]
             self.player_closest = stats[3]
             self.player_percentage = stats[4]
+            self.player_stats = stats
 
     def clear_board(self):
         """ Sets the card display values to defaults
