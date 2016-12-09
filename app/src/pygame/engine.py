@@ -28,7 +28,7 @@ class Engine(object):
         """ Initialize engine
 
         """
-
+        # Initialize pygame
         pygame.init()
 
         # click instructions
@@ -42,22 +42,26 @@ class Engine(object):
         self.card_dimensions = (190, 320)
         self.card_back = '-_-'
 
-
-        # Players
-        self.dealer_cards = []
-        self.dealer_values = []
-        self.player_cards = []
-        self.player_values = []
-        self.dealer_closest = self.player_closest = 0
-        self.dealer_percentage = self.player_percentage = 100.00
+        # Person
         self.result_active = False
-        self.player_result = 0
-        self.player_stats = []
-        self.dealer_stats = []
-
         self.person_x = [32, 242, 472, 512, 552, 592, 632, 672, 712, 752, 792]
-        self.dealer_y = 40
+
+        # Player
+        self.player_cards = []
+        self.player_stats = []
+        self.player_values = []
+        self.player_closest = 0
+        self.player_result = 0
+        self.player_percentage = 100.00
         self.player_y = 440
+
+        # Dealer
+        self.dealer_cards = []
+        self.dealer_stats = []
+        self.dealer_values = []
+        self.dealer_closest = 0
+        self.dealer_percentage = 100.00
+        self.dealer_y = 40
 
         # Buttons
         self.button_list = []
@@ -123,18 +127,22 @@ class Engine(object):
         """ Formats to specific decimal spaces
 
         Args:
-            val: (decimal): The number to truncate
+            val: (decimal): The number to Turncate
             format: (str): ".001": The decimal spot to show up to.
-            method: (enum): ROUND_HALF_UP: How to truncate val
+            method: (enum): ROUND_HALF_UP: How to Turncate val
 
         Returns:
-            (float): The truncated float
+            (float): The Turncated float
 
         """
         return float(Decimal(val.quantize(Decimal('.001'), method)))
 
     def _add_table(self, table_file_name, size):
         """ Table images
+
+        Args:
+            table_file_name: (str): The file path name for the image
+            size: ((int), (int)): The (width, length) dimensions
 
         """
         table = os.path.join(self.table_dir, table_file_name + ".png")
@@ -145,6 +153,10 @@ class Engine(object):
     def _add_card(self, pip, suit):
         """ Adds a card file to the images
 
+        Args:
+            pip: (str): The pip of the card
+            suit: (str): The suit of the card
+
         """
         card_name = pip + "_" + suit
         card_filepath = os.path.join(self.card_dir, card_name + ".png")
@@ -153,6 +165,16 @@ class Engine(object):
         self.card_images.update({card_name: img_src_sized})
 
     def _add_button(self, button):
+        """ Adds a button to the list of buttons in the form of a list of button
+        properties.
+
+        ["BUTTON_STR", "BUTTON_FUNC", "BUTTON_COORDINATES", "BUTTON_DIM",
+         "BUTTON_PY_RECT", "BUTTON_PY_TEXT", "BUTTON_PY_TEXT_COORDS"]
+
+        Args:
+            button: (list): a list of button information
+
+        """
         self._b_terms = {
             "BUTTON_STR": 0,
             "BUTTON_FUNC": 1,
@@ -185,50 +207,61 @@ class Engine(object):
     def _card_name(self, card):
         """ The string name of a card file
 
+        Args:
+            card: (card): The card to get the file name string representation
+
+        Returns:
+            (str): $pip_$suit: The file name string representation
+
         """
         if card.pip is False:
             return self.card_back
         return card.pip + '_' + card.suit
 
     def _flag_hit(self):
-        """ Hit request made
+        """ Hit request made, updating the action property
 
         """
-        print("hit")
         self._action = 1
+        print('H', end="", flush=True)
 
     def _flag_stand(self):
-        """ Stand request made
+        """ Stand request made, updating the action property
 
         """
-        print("stay")
         self._action = 2
+        print('S', end="", flush=True)
 
     def _flag_clear(self):
-        """ Clear request made
+        """ Clear request made, updating the action property
 
         """
-        print("clear")
         self._action = 3
+        print('C', end="", flush=True)
 
     def _flag_double_down(self):
-        """ Double down request made
+        """ Double down request made, updating the action property
+
+        This is currently unused in the implementation.
 
         """
-        print("D_D")
         self._action = 4
+        print('D', end="", flush=True)
 
     def _flag_replay(self):
-        """ Replay request made
+        """ Replay request made, updating the action property
 
         """
-        print("replay")
         self._action = 5
+        print('R', end="", flush=True)
 
     # Public properties
     @property
     def action(self):
         """ Retrieve pending request and reset request
+
+        Returns:
+            (int): range(0, 5): The last requested action
 
         """
         ret = self._action
@@ -237,7 +270,10 @@ class Engine(object):
 
     # Public methods
     def update(self, stats):
-        """ Updates a players hand
+        """ Updates a players or dealers hand
+
+        Args:
+            stats: (list 5): Contains the player or dealers information
 
         """
         if stats[0] == -1:
@@ -245,6 +281,7 @@ class Engine(object):
             self.dealer_values = stats[2]
             self.dealer_closest = stats[3]
             self.dealer_percentage = stats[4]
+            self.player_stats = stats
         else:
             self.player_cards = stats[1]
             self.player_values = stats[2]
@@ -252,7 +289,7 @@ class Engine(object):
             self.player_percentage = stats[4]
 
     def clear_board(self):
-        """ Sets the card display values to false
+        """ Sets the card display values to defaults
 
         """
         self.dealer_cards = []
@@ -262,11 +299,14 @@ class Engine(object):
         self.dealer_closest = self.player_closest = 0
         self.dealer_percentage = self.player_percentage = 100.00
 
-        print("Clear Board")
-
     def update_frame(self, delay=0):
-        """ Game frame
+        """ Game frame, updates the screen
+
+        Args:
+            delay: (int): 0: The length of the visual delay before completing
+
         """
+        # click coordinate initial
         coordinate = -1, -1
 
         # Check for button clicks and user exiting the window
@@ -283,6 +323,7 @@ class Engine(object):
         # Drawing the four buttons on the screen and checking for click
         for index, button in enumerate(self.button_list):
             if self.button_active[index] is True:
+                # Draw button
                 pygame.draw.rect(self.screen,
                                  self.color_background_button,
                                  button[self._b_terms["BUTTON_PY_RECT"]])
@@ -290,37 +331,42 @@ class Engine(object):
                 self.screen.blit(button[self._b_terms["BUTTON_PY_TEXT"]],
                                  button[self._b_terms["BUTTON_PY_TEXT_COORDS"]])
 
+                # click check
                 if button[self._b_terms["BUTTON_PY_RECT"]].collidepoint(coordinate):
                     button[self._b_terms["BUTTON_FUNC"]]()
 
-        # Draw the necessary cards on the screen
+        # Draw the named backgrounds
         self.screen.blit(self.table_images["table_dealer"],
                          (self.person_x[2] - 10, self.dealer_y - 10))
         self.screen.blit(self.table_images["table_player"],
                          (self.person_x[2] - 10, self.player_y - 10))
 
+        # Draw the card place mats - player
         self.screen.blit(self.table_images["single"],
                          (self.person_x[0] - 10, self.player_y - 10))
         self.screen.blit(self.table_images["single"],
                          (self.person_x[1] - 10, self.player_y - 10))
 
+        # Draw the card place mats - dealer
         self.screen.blit(self.table_images["single"],
                          (self.person_x[0] - 10, self.dealer_y - 10))
         self.screen.blit(self.table_images["single"],
                          (self.person_x[1] - 10, self.dealer_y - 10))
 
+        # Draw cards - dealer
         for index, card in enumerate(self.dealer_cards):
             self.screen.blit(self.card_images[self._card_name(card)],
                              self.dealer_cards_coordinates[index])
 
+        # Draw cards player
         for index, card in enumerate(self.player_cards):
             self.screen.blit(self.card_images[self._card_name(card)],
                              self.player_cards_coordinates[index])
 
-        # Create the pygame text for displaying the percentage win
+        # Generate the pygame text for displaying the percentage and hand results
         if self.percent_active is True:
             bust = self._format(Decimal(100 - self.player_percentage))
-            percentage_win = "(Bust on hit " + str(bust) + "%)"
+            percentage_win = "(Bust on 'Hit': " + str(bust) + "%)"
 
             # Variant Warning red
             if bust <= 50:
@@ -330,6 +376,7 @@ class Engine(object):
             else:
                 color = self.color_red
 
+            # Percentage bust
             percentage_win_text = self.font.render(percentage_win, 0, color)
             percentage_win_text_w = percentage_win_text.get_rect().width
             percentage_win_text_h = percentage_win_text.get_rect().height
@@ -337,13 +384,14 @@ class Engine(object):
                              (606 - percentage_win_text_w/2,
                               397.5 - percentage_win_text_h / 2))
 
+            # Results text
             results_text = self.font.render(str(self.player_stats[2]), 0, self.color_white)
             results_text_text_w = results_text.get_rect().width
             results_text_text_h = results_text.get_rect().height
             self.screen.blit(results_text,
                              (875 - results_text_text_w/2,
                               397.5 - results_text_text_h / 2))
-        # Who won
+        # Generate results text
         if self.result_active is True:
             result = self.player_result
             player = self.player_stats[3]
@@ -353,7 +401,7 @@ class Engine(object):
             color = self.color_black
             outcome = "DRAW"
 
-            # Variant Warning red
+            # Variant Warning red and outcome word
             if result == -1:
                 color = self.color_red
                 outcome = "LOSS"
@@ -361,6 +409,7 @@ class Engine(object):
                 color = self.color_green
                 outcome = "WIN"
 
+            # Generate text
             result_text = self.font.render(outcome + " with " + str(player) +
                                            " to " + str(dealer), 0, color)
             result_text_w = result_text.get_rect().width
@@ -368,16 +417,25 @@ class Engine(object):
             self.screen.blit(result_text,
                              (606 - result_text_w/2,
                               397.5 - result_text_h / 2))
+
         # Generate the window
         pygame.display.flip()
+        # wait the delay
         pygame.time.wait(delay)
 
+        print('.', end="", flush=True)
+
     def run(self):
-        """ run
+        """ Run the game engine
 
         """
         def print_player(ret):
-            """l"""
+            """ Console debugging function
+
+            Args:
+                ret: (list): list of player stats returned by the blackjack class
+
+            """
             number = ret[0]
             hand = str(ret[1])
             values = ret[2]
@@ -389,21 +447,24 @@ class Engine(object):
         # Build window
         pygame.display.set_caption(self.screen_title)
 
-        # Draw splash
+        # Draw splash screen
         self.screen.fill(self.color_background_table)
-        self.screen.blit(self.table_images["splash"], (235, 400 - 170))
+        self.screen.blit(self.table_images["splash"], (235, 230))
         pygame.display.flip()
         pygame.time.wait(2000)
 
+        # Draw transition screen
         self.screen.fill(self.color_background_table)
         pygame.display.flip()
         pygame.time.wait(1000)
 
+        # Begin application
         while True:
 
             # Load Blackjack game
             bj_game = Blackjack(1)
 
+            # Turn on/ off features
             self.button_active[0] = False
             self.button_active[1] = False
             self.button_active[2] = False
@@ -412,6 +473,8 @@ class Engine(object):
             self.result_active = False
 
             self.update_frame(1000)
+
+            # DEALING
 
             # Start game
             ret = bj_game.round_start()
@@ -430,104 +493,134 @@ class Engine(object):
 
             # Deal initial hands
             self.update(deal_player_1)
-            self.update_frame(500)
+            self.update_frame(250)
 
             self.update(deal_dealer_1)
-            self.update_frame(500)
+            self.update_frame(250)
 
             self.update(deal_player_2)
-            self.update_frame(500)
+            self.update_frame(250)
 
             self.update(deal_dealer_2)
-            self.update_frame(500)
+            self.update_frame(250)
 
-            self.update_frame(500)
+            self.update_frame(250)
 
             # Full start
             self.update(ret[0])
-            self.update_frame(500)
+            self.update_frame(250)
 
             self.update(ret[1])
             self.update_frame()
 
+            # Player game loop for a round
             play = True
             while play is True:
                 cont = True
                 ret = bj_game.player_start()
 
+                # Turn on/ off features
                 self.button_active[0] = True
                 self.button_active[1] = True
                 self.button_active[3] = False
 
+                # Update content
                 self.update(ret)
-                self.update_frame(500)
 
+                self.update_frame(0)
+
+                print_player(ret)
+
+                # Player game loop for a hand
                 while cont is True:
-                    print_player(ret)
+                    # Debug call
 
+                    # Update content
                     self.update(ret)
-                    self.update_frame(500)
-                    self.percent_active = True
-                    self.player_stats = ret
 
+                    self.update_frame(0)
+
+                    # Turn on/ off features
+                    self.percent_active = True
+
+                    # on call clears so leave here
                     action = self.action
+
                     # hit
                     if action == 1:
                         cont = True
 
+                        # Turn on/ off features
                         self.button_active[0] = True
                         self.button_active[1] = True
                         self.button_active[3] = False
                         self.percent_active = True
 
+                        # Update content
                         ret = bj_game.player_hit()
                         self.update(ret)
-                        self.update_frame(0)
+
+                        print_player(ret)
 
                     # stand
                     elif action == 2:
                         cont = False
 
+                        # Turn on/ off features
                         self.button_active[0] = False
                         self.button_active[1] = False
                         self.button_active[3] = False
                         self.percent_active = True
 
+                        # Update content
                         ret = bj_game.player_stay()
                         self.update(ret)
-                        self.update_frame(0)
 
                     # bust
                     if ret[3] > 21:
                         cont = False
 
+                        # Turn on/ off features
                         self.button_active[0] = False
                         self.button_active[1] = False
                         self.button_active[3] = True
                         self.percent_active = True
 
+                        # Update content
                         ret = bj_game.player_stay()
                         self.update(ret)
-                        self.update_frame(0)
 
                     # player end turn
                     if cont is False:
+                        # Turn on/ off features
                         self.button_active[0] = False
                         self.button_active[1] = False
                         self.button_active[3] = False
                         self.percent_active = False
 
+                        print_player(ret)
+
+                    # Update screen
+                    self.update_frame(0)
+
+                # End players turn
                 bj_game.player_end()
 
+                # If dealer end round game loop
                 if bj_game.player_current == -1:
                     play = False
 
+            # Dealers turn
             round_result = bj_game.round_end()
 
+            # Update dealers information
             ret = bj_game.dealer_stats()
             self.update(ret)
+
+            # Draw frame
             self.update_frame(500)
 
+            # Calculate winner
             dealer = self.dealer_stats = round_result[1]
             player = self.player_stats = round_result[0]
 
@@ -537,19 +630,21 @@ class Engine(object):
                 state = "WON"
             elif player[5] == -1:
                 state = "LOST"
-            print("player ", player[0], " ", state, " with ", player[1],
-                  " to dealers ", dealer[1])
+            # print("player ", player[0], " ", state, " with ", player[1],
+            #      " to dealers ", dealer[1])
 
+            # Turn on/ off features
             self.result_active = True
             self.button_active[3] = True
+
+            # Wait for replay signal
             replay = True
             while replay is True:
-                print('waiting')
                 self.update_frame(500)
                 if self.action == 5:
                     replay = False
 
+            # starting a new game
             del bj_game
-
             self.clear_board()
             self.update_frame()
