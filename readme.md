@@ -9,9 +9,6 @@ Contributor | Username
 Jose Flores | josefflores
 Andrew Long | andrewzlong
 
-### Documentation
-Our documentation can be found in [uml-cm-f16.github.io/blackjack/](https://uml-cm-f16.github.io/blackjack/).
-
 ### Run commands
 
 + Install Dependencies.
@@ -22,9 +19,13 @@ Our documentation can be found in [uml-cm-f16.github.io/blackjack/](https://uml-
 
   `python ./setup.py test`
 
-+ Run application.
++ Run Terminal application.
 
-  `python ./main.py`
+  `python ./terminal.py`
+
++ Run GUI application.
+
+  `python ./gui.py`
 
 + Update application: `$message` is the git commit message to use.
 
@@ -34,17 +35,17 @@ Our documentation can be found in [uml-cm-f16.github.io/blackjack/](https://uml-
 
 Task            | Status | Unit Test | Usability Test | Owner  | Dependencies      | Note
 ----------------|--------|-----------|----------------|--------|-------------------|---------------
-python 3        | D      | -         | -              | All    | -                 | Dependency.
-pyGame          | D      | -         | -              | All    |  python 3         | Dependency.
-pyGame research | D      | -         | -              | Andrew |  pyGame           | Learn about to pyGame.
-setup.py        | D      | -         | D              | Jose   |  -                | Installs and upgrades dependencies.
-card class      | D      | D         | -              | Jose   |  -                | A playing card.
-deck class      | D      | D         | -              | Jose   |  card             | A deck of Playing cards.
-hand class      | D      | D         | -              | Jose   |  card             | A hand of cards.
-player class    | D      | D         | -              | Jose   |  hand             | Extends a hand of cards, to make a player.
-dealer class    | D      | D         | -              | Jose   |  player, deck     | Extends a player by giving them deck access methods.
-blackjack class | D      | D         | -              | Jose   |  dealer, player   | The blackjack game rules applied to a dealer.
-engine          | D      | -         | D              | All    |  blackjack        | -
+python 3        | Done   | -         | -              | All    | -                 | Dependency.
+pyGame          | Done   | -         | -              | All    |  python 3         | Dependency.
+pyGame research | Done   | -         | -              | Andrew |  pyGame           | Learn about to pyGame.
+setup.py        | Done   | -         | Done           | Jose   |  -                | Installs and upgrades dependencies.
+card class      | Done   | Done      | -              | Jose   |  -                | A playing card.
+deck class      | Done   | Done      | -              | Jose   |  card             | A deck of Playing cards.
+hand class      | Done   | Done      | -              | Jose   |  card             | A hand of cards.
+player class    | Done   | Done      | -              | Jose   |  hand             | Extends a hand of cards, to make a player.
+dealer class    | Done   | Done      | -              | Jose   |  player, deck     | Extends a player by giving them deck access methods.
+blackjack class | Done   | Done      | -              | Jose   |  dealer, player   | The blackjack game rules applied to a dealer.
+engine          | Done   | -         | Done           | All    |  blackjack        | -
 Report          | W      | -         | -              | All    |  -                | -
 Submission      | W      | -         | -              | All    |  -                | -
 Demo            | W      | -         | -              | All    |  -                | -
